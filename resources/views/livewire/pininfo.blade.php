@@ -60,7 +60,7 @@
                         @endif
                         <div wire:loading>
                             <div class="alert alert-info" role="alert">
-                                <strong>Əməliyyat icra edilir...</strong>
+                                <strong>@lang('static.actions.processing')</strong>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,8 @@
                                 <div class="col-12">
                                     <div class="panel panel-default">
                                         <div class="p-2">
-                                            <h3 class="panel-title font-size-20"><strong>Bonus tarixçəsi</strong>
+                                            <h3 class="panel-title font-size-20">
+                                                <strong>@lang('static.pages.pininfo.bonushistory')</strong>
                                             </h3>
                                         </div>
                                         @if (array_key_exists('shoppings',$userData['pinArena'][1]))
@@ -82,13 +83,21 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <td><strong>Qurum</strong></td>
-                                                            <td class="text-center"><strong>Miqdar</strong></td>
-                                                            <td class="text-center"><strong>Qiymət</strong>
+                                                            <td>
+                                                                <strong>@lang('static.pages.usercheck.organization')</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Tarix</strong>
+                                                            <td class="text-center">
+                                                                <strong>@lang('static.pages.usercheck.qyt')</strong>
                                                             </td>
-                                                            <td class="text-right"><strong>Bonus</strong></td>
+                                                            <td class="text-center">
+                                                                <strong>@lang('static.pages.dashboard.latesttransactions.price')</strong>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <strong>@lang('static.pages.dashboard.latesttransactions.date')</strong>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <strong>@lang('static.pages.pininfo.bonus')</strong>
+                                                            </td>
                                                         </tr>
                                                         </thead>
                                                         <tbody>

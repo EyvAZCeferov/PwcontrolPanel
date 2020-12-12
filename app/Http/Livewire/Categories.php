@@ -12,11 +12,14 @@ class Categories extends Component
 
     public function mount()
     {
-        (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->signInWithEmailAndPassword('getdata@pw.az', 'getdata_123');
-        if ($this->deleted) {
-            $this->categories = \App\Models\Categories::onlyTrashed()->with('topCategory')->orderBy('created_at', 'DESC')->get();
-        } else {
-            $this->categories = \App\Models\Categories::orderBy('created_at', 'DESC')->with('topCategory')->get();
+        $token = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->signInWithEmailAndPassword('getdata@pw.az', 'getdata_123')->idToken();
+        $user = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->verifyIdToken($token);
+        if ($user) {
+            if ($this->deleted) {
+                $this->categories = \App\Models\Categories::onlyTrashed()->with('topCategory')->orderBy('created_at', 'DESC')->get();
+            } else {
+                $this->categories = \App\Models\Categories::orderBy('created_at', 'DESC')->with('topCategory')->get();
+            }
         }
     }
 

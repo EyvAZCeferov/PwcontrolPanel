@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Customers;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -25,7 +26,10 @@ class AdminAddEdit extends Component
             'name' => 'Baş admin',
             'id' => 3,
         ],
-
+        [
+            'name' => 'Səbət nəzarətçisi',
+            'id' => 4,
+        ],
     ], $market = false, $customers = null, $customer = null, $admin = null, $formFields = [
         'profilePhoto' => null,
         'role' => null,
@@ -42,7 +46,6 @@ class AdminAddEdit extends Component
         if ($id !== null) {
             $this->admin = User::where('id', $id)->get();
             $this->formFields = [
-                'profilePhoto' => $this->admin[0]->profilePhoto,
                 'role' => $this->admin[0]->role,
                 'customer_id' => $this->admin[0]->customer_id,
                 'name' => $this->admin[0]->name,
@@ -55,7 +58,7 @@ class AdminAddEdit extends Component
     public function updated()
     {
         $this->validate([
-            'formFields.profilePhoto' => 'max:10240|image',
+            'formFields.profilePhoto' => 'max:10240',
             'formFields.role' => 'required|integer|max:11',
             'formFields.customer_id' => 'integer|max:11',
             'formFields.name' => 'required|max:300',
@@ -74,7 +77,7 @@ class AdminAddEdit extends Component
             'customer_id' => $this->formFields['customer_id'] ? $this->formFields['customer_id'] : 1,
             'name' => $this->formFields['name'],
             'email' => $this->formFields['email'],
-            'password' => bcrypt($this->formFields['password']),
+            'password' => Hash::make($this->formFields['password']),
         ]);
 
         $this->formFields = [
@@ -91,13 +94,17 @@ class AdminAddEdit extends Component
 
     public function update()
     {
-        $this->formFields['profilePhoto']->storeAs('admins', $this->admin[0]->profilePhoto, 'uploads');
-        User::where('id',$this->admin[0]->id)->update([
+        if (array_key_exists('profilePhoto', $this->formFields)) {
+            if ($this->formFields['profilePhoto'] !== null) {
+                $this->formFields['profilePhoto']->storeAs('admins', $this->admin[0]->profilePhoto, 'uploads');
+            }
+        }
+        User::where('id', $this->admin[0]->id)->update([
             'role' => $this->formFields['role'],
             'customer_id' => $this->formFields['customer_id'] ? $this->formFields['customer_id'] : 1,
             'name' => $this->formFields['name'],
             'email' => $this->formFields['email'],
-            'password' => bcrypt($this->formFields['password']),
+            'password' => Hash::make($this->formFields['password']),
         ]);
 
         $this->formFields = [

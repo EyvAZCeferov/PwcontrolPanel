@@ -15,7 +15,6 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->integer('category');
             $table->integer('customer_id');
             $table->longText('images');
             $table->text('clasor');

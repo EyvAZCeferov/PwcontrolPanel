@@ -28,12 +28,7 @@ class Categories extends Model
 
     public function topCategory()
     {
-        return $this->hasOne('\App\Models\Categories', 'top_category', 'id');
-    }
-
-    public function getPost()
-    {
-        return $this->hasOne(Locations::class, 'customer_id', 'id');
+        return $this->hasOne('\App\Models\Categories', 'id', 'top_category');
     }
 
 }

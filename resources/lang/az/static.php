@@ -7,6 +7,7 @@ return [
         'profile' => 'Profil',
         'login' => 'Daxil ol',
         'admins' => 'Adminlər',
+        '404' => 'Səhifə tapılmadı'
     ],
     'menu' => [
         'dashboard' => 'İdarə paneli',
@@ -21,6 +22,7 @@ return [
         'customers' => 'Müştərilər',
         'admins' => 'Adminlər',
         'settings' => 'Tənzimləmələr',
+        'buckets' => 'Səbət'
     ],
     'actions' => [
         'more' => 'Daha Çox...',
@@ -29,6 +31,9 @@ return [
         'delete' => 'Sil',
         'forcedelete' => 'Sil! Geri qaytarılmır',
         'recover' => 'Bərpa et',
+        'cancel' => 'Ləğv et',
+        'prepare' => 'Qəbul edildi',
+        'ready' => 'Hazırlandı',
         'processing' => 'Əməliyyat icra edilir...',
         'buttons' => 'Düymələr',
         'logout' => 'Çıxış',
@@ -89,7 +94,23 @@ return [
         ],
         'pininfo' => [
             'title' => ':user Pinləri haqda məlumat',
+            'bonushistory' => 'Bonus tarixçəsi',
+            'bonus' => 'Bonus'
         ],
+        'bucket' => [
+            'title' => 'Səbət',
+            'endtime' => 'Çatdırılma vaxtı',
+        ],
+        '404' => [
+            'sorry' => 'Üzr istəyirik, Axtardığınız səhifə tapılmadı',
+            'backhome' => 'Ana səhifəyə geri dön'
+        ],
+    ],
+    'adminroles' => [
+        'customer' => 'Müştəri',
+        'top_admin' => 'Baş admin',
+        'viewer' => 'Nəzarətçi',
+        'bucketviewer' => 'Səbət nəzarətçisi',
     ],
     'formFields' => [
         'labels' => [
@@ -110,7 +131,18 @@ return [
             'branchcount' => 'Filial sayı',
             'selectpictures' => 'Şəklləri seç',
             'description' => 'Açıqlama',
-            'location' => 'Məkan'
+            'location' => 'Məkan',
+            'pass' => [
+                'oldpassword' => 'Hal-hazırki şifrə',
+                'password1' => 'Yeni şifrə',
+                'password2' => 'Yeni şifrənin təkrarı'
+            ],
+            'role' => 'Rol',
+            'post' => [
+                'viewCount' => 'Baxış sayı',
+                'startendtime' => 'Başlanğıc - Son tarix',
+
+            ],
         ],
         'inputs' => [
             'email' => 'Elektron Poçtu daxil et.',

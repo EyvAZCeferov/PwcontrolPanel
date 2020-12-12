@@ -8,7 +8,24 @@ use App\User;
 
 class Admins extends Component
 {
-    public $deleted = false, $admins;
+    public $deleted = false, $admins, $adminRoles = [
+        [
+            'name' => 'Nəzarətçi',
+            'id' => 1,
+        ],
+        [
+            'name' => 'Müştəri',
+            'id' => 2,
+        ],
+        [
+            'name' => 'Baş admin',
+            'id' => 3,
+        ],
+        [
+            'name' => 'Səbət nəzarətçisi',
+            'id' => 4,
+        ],
+    ];
 
     public function mount()
     {

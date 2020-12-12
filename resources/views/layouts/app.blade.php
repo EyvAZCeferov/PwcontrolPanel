@@ -29,7 +29,6 @@
 <body data-sidebar="dark">
 <!-- Begin page -->
 <div id="layout-wrapper">
-
     <header id="page-topbar">
         <div class="navbar-header">
             <div class="d-flex">
@@ -37,22 +36,22 @@
                 <div class="navbar-brand-box">
                     <a href="{{route('dashboard')}}" class="logo logo-dark">
                                 <span class="logo-sm">
-                                    <img src="{{asset('assets/commons/images/icon-ios.png')}}" alt="Pay And Win logo"
+                                    <img src="{{asset('assets/commons/images/icon-white.png')}}" alt="Pay And Win logo"
                                          height="40"/>
                                 </span>
                         <span class="logo-lg">
-                                    <img src="{{asset('assets/commons/images/icon-ios.png')}}" alt="Pay And Win logo"
+                                    <img src="{{asset('assets/commons/images/icon-white.png')}}" alt="Pay And Win logo"
                                          height="40"/>
                                 </span>
                     </a>
 
                     <a href="{{route('dashboard')}}" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="{{asset('assets/commons/images/icon-ios.png')}}" alt="Pay And Win logo"
+                                    <img src="{{asset('assets/commons/images/icon-white.png')}}" alt="Pay And Win logo"
                                          height="40"/>
                                 </span>
                         <span class="logo-lg">
-                                    <img src="{{asset('assets/commons/images/icon-ios.png')}}" alt="Pay And Win logo"
+                                    <img src="{{asset('assets/commons/images/icon-white.png')}}" alt="Pay And Win logo"
                                          height="40"/>
                         </span>
                     </a>
@@ -73,24 +72,80 @@
             <div class="d-flex">
 
                 <div class="dropdown d-none d-md-block ml-2">
-                    <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        <img class="mr-2" src="{{asset('assets/admin/cssjslib/images/flags/us_flag.jpg')}}"
-                             alt="Header Language" height="16">
-                        English <span class="mdi mdi-chevron-down"></span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    @if(app()->getLocale()=='az')
+                        <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <img class="mr-2" src="{{asset('assets/admin/cssjslib/images/flags/az_flag.png')}}"
+                                 alt="Header Language" height="16">
+                            Az <span class="mdi mdi-chevron-down"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="{{asset('assets/admin/cssjslib/images/flags/germany_flag.jpg')}}" alt="user-image"
-                                 class="mr-1" height="12">
-                            <span class="align-middle"> German </span>
-                        </a>
+                            <!-- item-->
+                            <a href="{{route('locale','ru')}}" class="dropdown-item notify-item">
+                                <img src="{{asset('assets/admin/cssjslib/images/flags/russia_flag.jpg')}}"
+                                     alt="user-image"
+                                     class="mr-1" height="12">
+                                <span class="align-middle"> Ru </span>
+                            </a>
+                            <a href="{{route('locale','en')}}" class="dropdown-item notify-item">
+                                <img src="{{asset('assets/admin/cssjslib/images/flags/us_flag.jpg')}}"
+                                     alt="user-image"
+                                     class="mr-1" height="12">
+                                <span class="align-middle"> En </span>
+                            </a>
 
-                    </div>
+                        </div>
+                    @elseif(app()->getLocale()=='en')
+                        <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <img class="mr-2" src="{{asset('assets/admin/cssjslib/images/flags/us_flag.jpg')}}"
+                                 alt="Header Language" height="16">
+                            En <span class="mdi mdi-chevron-down"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+
+                            <!-- item-->
+                            <a href="{{route('locale','ru')}}" class="dropdown-item notify-item">
+                                <img src="{{asset('assets/admin/cssjslib/images/flags/russia_flag.jpg')}}"
+                                     alt="user-image"
+                                     class="mr-1" height="12">
+                                <span class="align-middle"> Ru </span>
+                            </a>
+                            <a href="{{route('locale','az')}}" class="dropdown-item notify-item">
+                                <img src="{{asset('assets/admin/cssjslib/images/flags/az_flag.png')}}"
+                                     alt="user-image"
+                                     class="mr-1" height="12">
+                                <span class="align-middle"> Az </span>
+                            </a>
+
+                        </div>
+                    @elseif (app()->getLocale()=='ru')
+                        <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <img class="mr-2" src="{{asset('assets/admin/cssjslib/images/flags/russia_flag.jpg')}}"
+                                 alt="Header Language" height="16">
+                            Ru <span class="mdi mdi-chevron-down"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+
+                            <!-- item-->
+                            <a href="{{route('locale','en')}}" class="dropdown-item notify-item">
+                                <img src="{{asset('assets/admin/cssjslib/images/flags/us_flag.jpg')}}"
+                                     alt="user-image"
+                                     class="mr-1" height="12">
+                                <span class="align-middle"> En </span>
+                            </a>
+                            <a href="{{route('locale','az')}}" class="dropdown-item notify-item">
+                                <img src="{{asset('assets/admin/cssjslib/images/flags/az_flag.png')}}"
+                                     alt="user-image"
+                                     class="mr-1" height="12">
+                                <span class="align-middle"> Az </span>
+                            </a>
+
+                        </div>
+                    @endif
                 </div>
-
                 <div class="dropdown d-none d-lg-inline-block">
                     <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                         <i class="mdi mdi-fullscreen"></i>
@@ -181,54 +236,62 @@
             <div id="sidebar-menu">
                 <!-- Left Menu Start -->
                 <ul class="metismenu list-unstyled" id="side-menu">
-
+                    @if(auth()->user()->role <>4)
+                        <li>
+                            <a href="{{route('dashboard')}}" class="waves-effect">
+                                <i class="dripicons-device-desktop"></i>
+                                <span>@lang('static.menu.dashboard')</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(auth()->user()->role <>4)
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-photo-group"></i>
+                                <span> @lang('static.menu.media.medias') </span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{route('categories')}}">@lang('static.menu.media.categories')</a></li>
+                                <li><a href="{{route('posts')}}">@lang('static.menu.media.campaigns')</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                    @if(auth()->user()->role ==3)
+                        <li>
+                            <a href="{{route('pwusers')}}" class="waves-effect">
+                                <i class="dripicons-user-group"></i>
+                                <span>@lang('static.menu.pwusers')</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(auth()->user()->role <>4)
+                        <li>
+                            <a href="{{route('locations')}}" class="waves-effect">
+                                <i class="dripicons-map"></i>
+                                <span>@lang('static.menu.locations')</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(auth()->user()->role ==1)
+                        <li>
+                            <a href="{{route('customers')}}" class="waves-effect">
+                                <i class="dripicons-archive"></i>
+                                <span>@lang('static.menu.customers')</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('admins')}}" class="waves-effect">
+                                <i class="dripicons-user-id"></i>
+                                <span>@lang('static.menu.admins')</span>
+                            </a>
+                        </li>
+                    @endif
                     <li>
-                        <a href="{{route('dashboard')}}" class="waves-effect">
-                            <i class="dripicons-device-desktop"></i>
-                            <span>@lang('static.menu.dashboard')</span>
+                        <a href="{{route('buckets')}}" class="waves-effect">
+                            <i class="dripicons-cart"></i>
+                            <span>@lang('static.menu.buckets')</span>
                         </a>
                     </li>
-
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="dripicons-photo-group"></i>
-                            <span> @lang('static.menu.media.medias') </span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{route('categories')}}">@lang('static.menu.media.categories')</a></li>
-                            <li><a href="{{route('postsCalendar')}}">@lang('static.menu.media.calendar')</a></li>
-                            <li><a href="{{route('posts')}}">@lang('static.menu.media.campaigns')</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="{{route('pwusers')}}" class="waves-effect">
-                            <i class="dripicons-user-group"></i>
-                            <span>@lang('static.menu.pwusers')</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{route('locations')}}" class="waves-effect">
-                            <i class="dripicons-map"></i>
-                            <span>@lang('static.menu.locations')</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{route('customers')}}" class="waves-effect">
-                            <i class="dripicons-archive"></i>
-                            <span>@lang('static.menu.customers')</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{route('admins')}}" class="waves-effect">
-                            <i class="dripicons-user-id"></i>
-                            <span>@lang('static.menu.admins')</span>
-                        </a>
-                    </li>
-
                 </ul>
             </div>
             <!-- Sidebar -->

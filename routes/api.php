@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'media'], function () {
+    Route::get('customers', 'Api\ApiController@customers');
+    Route::get('customers/{id}', 'Api\ApiController@customer');
+    Route::get('categories', 'Api\ApiController@categories');
+    Route::get('categories/{id}', 'Api\ApiController@category');
+    Route::get('posts', 'Api\ApiController@posts');
+    Route::get('posts/{id}', 'Api\ApiController@post');
+    Route::get('posts/{id}/read/{bool}', 'Api\ApiController@postread')->middleware(\App\Http\Middleware\ApiUserController::class);
+    Route::get('locations', 'Api\ApiController@locations');
+    Route::get('locations/{id}', 'Api\ApiController@location');
 });

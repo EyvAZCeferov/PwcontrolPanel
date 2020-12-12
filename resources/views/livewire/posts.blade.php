@@ -1,5 +1,9 @@
-@section('title','Kampaniyalar')
-@section('pageName','Kampaniyalar')
+@section('title')
+    @lang('static.menu.media.campaigns')
+@endsection
+@section('pageName')
+    @lang('static.menu.media.campaigns')
+@endsection
 @section('css')
     <!-- DataTables -->
     <link href="{{asset('/assets/admin/cssjslib/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}"
@@ -47,25 +51,26 @@
                         <div class="card">
                             <div class="card-body">
                                 @if($deleted)
-                                    <h4 class="card-title">Kampaniyaların silinmiş siyahısı</h4>
+                                    <h4 class="card-title">@lang('static.formFields.validation.deleted',['base'=>@lang('static.menu.media.campaigns')])</h4>
                                 @else
-                                    <h4 class="card-title">Kampaniyaların siyahısı</h4>
+                                    <h4 class="card-title">@lang('static.formFields.validation.lists',['base'=>@lang('static.menu.media.campaigns')])</h4>
                                 @endif
                                 <p class="justify-content-lg-around justify-content-md-around">
-                                    @if($deleted)
-                                        Bu siyahıda bazadan silinmiş kampaniyaların siyahılarına nəzarət edə
-                                        məlumatlarını
-                                        geri qaytara, və ya birdəfəlik silə bilərsiniz.
-                                    @else
-                                        Bu siyahıda kampaniyaların siyahılarına nəzarət edə əlavə edə bilərsiniz.
+                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                        @if($deleted)
+                                            @lang('static.formFields.validation.indeletedlists',['base'=>@lang('static.menu.media.campaigns')])
+                                        @else
+                                            @lang('static.formFields.validation.notdeletedlists',['base'=>@lang('static.menu.media.campaigns')])
+                                        @endif
                                     @endif
-                                    <a data-toggle="tooltip"
-                                       data-placement="top" title="Admin əlavə et"
-                                       data-title="Admin əlavə et"
-                                       href="{{route('postsAdd')}}"
-                                       class="btn btn-lg btn-outline-primary"><i
-                                            class="ion ion-md-add"></i></a>
-                                    <span class="d-inline-block px-5">
+                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                        <a data-toggle="tooltip"
+                                           data-placement="top" title="@lang('static.actions.add')"
+                                           data-title="@lang('static.actions.add')"
+                                           href="{{route('postsAdd')}}"
+                                           class="btn btn-lg btn-outline-primary"><i
+                                                class="ion ion-md-add"></i></a>
+                                        <span class="d-inline-block px-5">
                                     <input wire:model="deleted"
                                            @if($deleted)
                                            checked
@@ -73,9 +78,10 @@
                                            type="checkbox"
                                            id="switch1"
                                            switch="none"/>
-                                    <label for="switch1" data-on-label="Silinənlər"
-                                           data-off-label="Silinməyənlər"></label>
+                                    <label for="switch1" data-on-label="@lang('static.formFields.inputs.deleted')"
+                                           data-off-label="@lang('static.formFields.inputs.notdeleted')"></label>
                                 </span>
+                                    @endif
                                 </p>
 
                                 @if (session()->has('message'))
@@ -86,7 +92,7 @@
 
                                 <div wire:loading>
                                     <div class="alert alert-info" role="alert">
-                                        <strong>Əməliyyat icra edilir...</strong>
+                                        <strong>@lang('static.actions.processing')</strong>
                                     </div>
                                 </div>
                             </div>
@@ -98,14 +104,13 @@
                                 <thead>
 
                                 <tr>
-                                    <th>Şəkillər</th>
-                                    <th>Ad</th>
-                                    <th>Kateqoriya</th>
-                                    <th>Müştəri</th>
-                                    <th>Baxılma sayı</th>
-                                    <th>Başlanğıc - Son vaxt</th>
-                                    <th>Qiymət</th>
-                                    <th>Düymələr</th>
+                                    <th>@lang('static.formFields.labels.pictures')</th>
+                                    <th>@lang('static.formFields.labels.name')</th>
+                                    <th>@lang('static.menu.customers')</th>
+                                    <th>@lang('static.formFields.labels.post.viewCount')</th>
+                                    <th>@lang('static.formFields.labels.post.startendtime')</th>
+                                    <th>@lang('static.pages.dashboard.latesttransactions.price')</th>
+                                    <th>@lang('static.actions.buttons')</th>
                                 </tr>
 
                                 </thead>
@@ -125,17 +130,11 @@
                                             {{$campaign->az_name}}
                                         </td>
                                         <td>
-                                            @if($campaign->getCat)
-                                                {{$campaign->getCat->az_name}}
-                                            @else
-                                                <span class="text-danger">Kateqoriya yoxdur</span>
-                                            @endif
-                                        </td>
-                                        <td>
                                             @if($campaign->getCustomer)
                                                 {{$campaign->getCustomer->az_name}}
                                             @else
-                                                <span class="text-danger">Müştəri yoxdur</span>
+                                                <span
+                                                    class="text-danger">@lang('static.formFields.actions.nullData')</span>
                                             @endif
                                         </td>
                                         <td>
@@ -143,13 +142,13 @@
                                         </td>
                                         <td>
                                             <span class="text-primary">
-                                                {{\Carbon\Carbon::createFromTimestamp($campaign->startTime)}}
+                                                {{\Carbon\Carbon::createFromTimestamp($campaign->startTime*1000)}}
                                             </span>
                                             &nbsp;
                                             <span class="text-secondary">-</span>
                                             &nbsp;
                                             <span
-                                                class="text-danger">{{\Carbon\Carbon::createFromTimestamp($campaign->endTime)}}</span>
+                                                class="text-danger">{{\Carbon\Carbon::createFromTimestamp($campaign->endTime*1000)}}</span>
                                         </td>
                                         <td>
                                             {{$campaign->price}}
@@ -160,14 +159,15 @@
                                                     class="btn-group center justify-center text-center align-center">
                                                     <button class="btn btn-lg btn-danger"
                                                             data-toggle="tooltip"
-                                                            data-placement="top" title="Sil! Geri qaytarılmır!"
+                                                            data-placement="top"
+                                                            title="@lang('static.actions.forcedelete')"
                                                             wire:click="hardDelete('{{$campaign->id}}')"
                                                     >
                                                         <i class="mdi mdi-delete-alert"></i>
                                                     </button>
                                                     <button class="btn btn-lg btn-info"
                                                             data-toggle="tooltip"
-                                                            data-placement="top" title="Geri qaytar!"
+                                                            data-placement="top" title="@lang('static.actions.recover')"
                                                             wire:click="recover('{{$campaign->id}}')"
                                                     >
                                                         <i class="mdi mdi-table-refresh"></i>
@@ -178,14 +178,14 @@
                                                     class="btn-group center justify-center text-center align-center">
                                                     <button class="btn btn-lg btn-danger"
                                                             data-toggle="tooltip"
-                                                            data-placement="top" title="Sil"
+                                                            data-placement="top" title="@lang('static.actions.delete')"
                                                             wire:click="delete('{{$campaign->id}}')"
                                                     >
                                                         <i class="mdi mdi-trash-can-outline"></i>
                                                     </button>
                                                     <a
                                                         data-toggle="tooltip"
-                                                        data-placement="top" title="Dəyişiklik et!"
+                                                        data-placement="top" title="@lang('static.actions.edit')"
                                                         class="btn btn-lg btn-warning waves-effect waves-light"
                                                         href={{route('postsEdit',$campaign->id)}}
                                                     >
@@ -193,7 +193,7 @@
                                                     </a>
                                                     <a
                                                         data-toggle="tooltip"
-                                                        data-placement="top" title="Daha çox.."
+                                                        data-placement="top" title="@lang('static.actions.more')"
                                                         class="btn btn-lg btn-info waves-effect waves-light"
                                                         href={{route('postsBrowse',$campaign->id)}}
                                                     >

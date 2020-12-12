@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Categories;
 use App\Models\Customers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +13,6 @@ class Posts extends Model
     protected $table = 'posts';
     protected $fillable = [
         'id',
-        'category',
         'customer_id',
         'images',
         'clasor',
@@ -32,10 +30,6 @@ class Posts extends Model
     ];
     protected $dates = ['startTime', 'endTime', 'created_at', 'updated_at', 'deleted_at'];
 
-    public function getCat()
-    {
-        return $this->hasOne(Categories::class, 'id', 'category');
-    }
 
     public function getCustomer()
     {

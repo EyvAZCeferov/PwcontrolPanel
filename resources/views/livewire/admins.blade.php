@@ -56,18 +56,21 @@
                                     <h4 class="card-title">@lang('static.formFields.validation.lists',['base'=>'Adminlərin'])</h4>
                                 @endif
                                 <p class="justify-content-lg-around justify-content-md-around">
-                                    @if($deleted)
-                                        @lang('static.formFields.validation.indeletedlists',['base'=>'Adminlərin'])
-                                    @else
-                                        @lang('static.formFields.validation.notdeletedlists',['base'=>'Adminlərin'])
+                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                        @if($deleted)
+                                            @lang('static.formFields.validation.indeletedlists',['base'=>'Adminlərin'])
+                                        @else
+                                            @lang('static.formFields.validation.notdeletedlists',['base'=>'Adminlərin'])
+                                        @endif
                                     @endif
-                                    <a data-toggle="tooltip"
-                                       data-placement="top" title="@lang('static.actions.add')"
-                                       data-title="@lang('static.actions.add')"
-                                       href="{{route('addAdmin')}}"
-                                       class="btn btn-lg btn-outline-primary"><i
-                                            class="ion ion-md-add"></i></a>
-                                    <span class="d-inline-block px-5">
+                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                        <a data-toggle="tooltip"
+                                           data-placement="top" title="@lang('static.actions.add')"
+                                           data-title="@lang('static.actions.add')"
+                                           href="{{route('addAdmin')}}"
+                                           class="btn btn-lg btn-outline-primary"><i
+                                                class="ion ion-md-add"></i></a>
+                                        <span class="d-inline-block px-5">
                                     <input wire:model="deleted"
                                            @if($deleted)
                                            checked
@@ -78,6 +81,7 @@
                                     <label for="switch1" data-on-label="@lang('static.formFields.inputs.deleted')"
                                            data-off-label="@lang('static.formFields.inputs.notdeleted')"></label>
                                 </span>
+                                    @endif
                                 </p>
 
                                 @if (session()->has('message'))
@@ -103,7 +107,10 @@
                                     <th>@lang('static.formFields.labels.picture')</th>
                                     <th>@lang('static.formFields.labels.name')</th>
                                     <th>@lang('static.formFields.labels.email')</th>
-                                    <th>@lang('static.actions.buttons')</th>
+                                    <th>@lang('static.formFields.labels.role')</th>
+                                    @if(auth()->user()->role==3)
+                                        <th>@lang('static.actions.buttons')</th>
+                                    @endif
                                 </tr>
 
                                 </thead>
@@ -122,46 +129,57 @@
                                             {{$admin->email}}
                                         </td>
                                         <td>
-                                            @if($deleted)
-                                                <div
-                                                    class="btn-group center justify-center text-center align-center">
-                                                    <button class="btn btn-lg btn-danger"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
-                                                            title="@lang('static.actions.forcedelete')"
-                                                            wire:click="hardDelete('{{$admin->id}}')"
-                                                    >
-                                                        <i class="mdi mdi-delete-alert"></i>
-                                                    </button>
-                                                    <button class="btn btn-lg btn-info"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top" title="@lang('static.actions.recover')"
-                                                            wire:click="recover('{{$admin->id}}')"
-                                                    >
-                                                        <i class="mdi mdi-table-refresh"></i>
-                                                    </button>
-                                                </div>
-                                            @else
-                                                <div
-                                                    class="btn-group center justify-center text-center align-center">
-                                                    <button class="btn btn-lg btn-danger"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top" title="@lang('static.actions.delete')"
-                                                            wire:click="delete('{{$admin->id}}')"
-                                                    >
-                                                        <i class="mdi mdi-trash-can-outline"></i>
-                                                    </button>
-                                                    <a
-                                                        data-toggle="tooltip"
-                                                        data-placement="top" title="@lang('static.actions.edit')"
-                                                        class="btn btn-lg btn-warning waves-effect waves-light"
-                                                        href={{route('editAdmin',$admin->id)}}
-                                                    >
-                                                        <i class="mdi mdi-circle-edit-outline"></i>
-                                                    </a>
-                                                </div>
-                                            @endif
+                                            @for($i=0;$i<count($adminRoles);$i++)
+                                                @if ($adminRoles[$i]['id']==$admin->role)
+                                                    {{$adminRoles[$i]['name']}}
+                                                @endif
+                                            @endfor
                                         </td>
+                                        @if(auth()->user()->role==3)
+                                            <td>
+                                                @if($deleted)
+                                                    <div
+                                                        class="btn-group center justify-center text-center align-center">
+                                                        <button class="btn btn-lg btn-danger"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title="@lang('static.actions.forcedelete')"
+                                                                wire:click="hardDelete('{{$admin->id}}')"
+                                                        >
+                                                            <i class="mdi mdi-delete-alert"></i>
+                                                        </button>
+                                                        <button class="btn btn-lg btn-info"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title="@lang('static.actions.recover')"
+                                                                wire:click="recover('{{$admin->id}}')"
+                                                        >
+                                                            <i class="mdi mdi-table-refresh"></i>
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class="btn-group center justify-center text-center align-center">
+                                                        <button class="btn btn-lg btn-danger"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title="@lang('static.actions.delete')"
+                                                                wire:click="delete('{{$admin->id}}')"
+                                                        >
+                                                            <i class="mdi mdi-trash-can-outline"></i>
+                                                        </button>
+                                                        <a
+                                                            data-toggle="tooltip"
+                                                            data-placement="top" title="@lang('static.actions.edit')"
+                                                            class="btn btn-lg btn-warning waves-effect waves-light"
+                                                            href={{route('editAdmin',$admin->id)}}
+                                                        >
+                                                            <i class="mdi mdi-circle-edit-outline"></i>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>

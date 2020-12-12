@@ -74,7 +74,6 @@
                                                 accept="image/*"
                                                 wire:model="formFields.profilePhoto"
                                                 type="file"
-                                                required
                                             />
                                         </div>
                                         @error('formFields.profilePhoto') <span

@@ -42,7 +42,7 @@
                                     <strong>{{session('message')}}</strong>
                                 </div>
                             @endif
-                            <form class="form-horizontal" method="POST" action="{{route('login')}}">
+                            <form class="form-horizontal" method="POST" action="{{route('loginPost')}}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="username">@lang('static.formFields.labels.email')</label>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class BaseController extends Controller
 {
@@ -42,5 +44,17 @@ class BaseController extends Controller
             session()->flash('message', 'Daxil etdiyiniz email vəya şifrə bazamızda tapılmadı!');
             return redirect('/login');
         }
+    }
+
+    public function changeLocale($locale)
+    {
+        App::setLocale($locale);
+        Session::put('localization', $locale);
+        return redirect('/');
+    }
+
+    function fallback()
+    {
+        return view('common.404');
     }
 }

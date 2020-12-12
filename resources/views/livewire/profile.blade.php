@@ -24,7 +24,7 @@
 
                     <div wire:loading>
                         <div class="alert alert-info" role="alert">
-                            <strong>Əməliyyat icra edilir...</strong>
+                            <strong>@lang('static.actions.processing')</strong>
                         </div>
                     </div>
                     <div class="card">
@@ -43,13 +43,16 @@
                                     <p class="text-muted font-size-14 font-weight-medium font-secondary mb-0">
                                         @switch($user[0]->role)
                                             @case(1)
-                                            Nəzarətçi
+                                            @lang('static.adminroles.viewer')
                                             @break
                                             @case(2)
-                                            Müştəri
+                                            @lang('static.adminroles.customer')
                                             @break
                                             @case(3)
-                                            Baş admin
+                                            @lang('static.adminroles.top_admin')
+                                            @break
+                                            @case(4)
+                                            @lang('static.adminroles.bucketviewer')
                                             @break
                                             @default
                                         @endswitch
@@ -66,10 +69,23 @@
                                        class="form-control">
                                 @error('formFields.email') <span
                                     class="error">{{ $message }}</span> @enderror
-                                <input type="text" placeholder="Hal-hazırki şifrəni qorumaq üçün boş saxlayın!"
-                                       wire:model="formFields.password"
+                            </div>
+                            <div class="d-flex justify-content-around">
+
+                                <input type="text" placeholder="@lang('static.formFields.labels.pass.oldpassword')"
+                                       wire:model="formFields.password.oldpassword"
                                        class="form-control">
-                                @error('formFields.password') <span
+                                @error('formFields.password.oldpassword') <span
+                                    class="error">{{ $message }}</span> @enderror
+                                <input type="text" placeholder="@lang('static.formFields.labels.pass.password1')"
+                                       wire:model="formFields.password.password"
+                                       class="form-control">
+                                @error('formFields.password.password') <span
+                                    class="error">{{ $message }}</span> @enderror
+                                <input type="text" placeholder="@lang('static.formFields.labels.pass.password2')"
+                                       wire:model="formFields.password.password_confirmation"
+                                       class="form-control">
+                                @error('formFields.password.password_confirmation') <span
                                     class="error">{{ $message }}</span> @enderror
                                 <button class="btn btn-primary" wire:click="change">
                                     <i class="mdi mdi-check"></i>
