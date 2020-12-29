@@ -22,7 +22,12 @@ return [
         'customers' => 'Müştərilər',
         'admins' => 'Adminlər',
         'settings' => 'Tənzimləmələr',
-        'buckets' => 'Səbət'
+        'buckets' => 'Səbət',
+        'forwebsite' => [
+            'website' => 'Digər',
+            'settings' => 'Sazlamalar',
+            'about' => 'Haqqında'
+        ],
     ],
     'actions' => [
         'more' => 'Daha Çox...',
@@ -105,6 +110,38 @@ return [
             'sorry' => 'Üzr istəyirik, Axtardığınız səhifə tapılmadı',
             'backhome' => 'Ana səhifəyə geri dön'
         ],
+        'settings' => [
+            'title' => 'Website və mobil applikasiya haqqında sazlamalar.',
+            'form' => [
+                'labels' => [
+                    'projectName' => 'Layihə adı',
+                    'adminpanelUrl' => 'Admin panel linki',
+                    'description' => 'Açıqlama',
+                    'logo' => 'Logo',
+                    'phoneNumb' => 'Telefon nömrəsi',
+                    'facebook_page' => 'Facebook Səhifə linki',
+                    'instagram_page' => 'İnstagram Səhifə linki',
+                    'youtube_page' => 'Youtube Səhifə linki',
+                    'twitter_page' => 'Twitter Səhifə linki',
+                    'copyright' => 'Kopirayt',
+                    'coop_loc' => 'Məkan',
+                    'site_address' => 'Sayt url',
+                ],
+            ],
+            'about'=>[
+                'title'=>'Haqqında ayarlamaları',
+                'tabs'=>[
+                    'about'=>'Haqqında',
+                    'whychooseus'=>'Bizi niyə seçməlisiniz?',
+                    'teams'=>'Komanda üzvü',
+                ],
+                'form'=>[
+                    'labels'=>[
+                        
+                    ],
+                ],
+            ],
+        ],
     ],
     'adminroles' => [
         'customer' => 'Müştəri',
@@ -160,7 +197,8 @@ return [
         ],
         'buttons' => [
             'login' => 'Daxil ol',
-            'deleteimage' => 'Şəkili Sil!'
+            'deleteimage' => 'Şəkili Sil!',
+            'update' => 'Yenilə'
         ],
         'actions' => [
             'nullData' => 'Məlumat boşdur.',

@@ -24,11 +24,6 @@
         @lang('static.actions.add') @lang('static.menu.customers')
     @endif
 @endsection
-{{--@section('js')--}}
-{{--    <script src="{{asset('/assets/admin/cssjslib/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>--}}
-{{--    <script src="{{asset('/assets/admin/cssjslib/libs/parsleyjs/parsley.min.js')}}"></script>--}}
-{{--    <script src="{{asset('/assets/admin/cssjslib/js/pages/form-validation.init.js')}}"></script>--}}
-{{--@endsection--}}
 <div>
     <div class="main-content">
         <div class="page-content">

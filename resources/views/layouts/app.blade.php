@@ -1,4 +1,4 @@
-<!doctype html>
+<!Doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
@@ -11,13 +11,14 @@
     <title>@yield('title','Ödənin və qazanın nəzarət paneli')</title>
     <link rel="stylesheet" href="{{asset('/css/app.css')}}">
     <!-- Bootstrap Css -->
-    <link href="{{asset('/assets/admin/cssjslib/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet"
+    <link href="{{asset('/assets/admin/cssjslib/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet"/>
     <!-- Icons Css -->
     <link href="{{asset('/assets/admin/cssjslib/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- App Css-->
     <link href="{{asset('/assets/admin/cssjslib/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css"/>
-    <livewire:styles/>
-    <livewire:scripts/>
+
+    @livewireStyles
+
     <style>
         .turbolinks-progress-bar {
             height: 3px;
@@ -59,7 +60,7 @@
 
                 <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
                         id="vertical-menu-btn">
-                    <i class="mdi mdi-menu"></i>
+                    <i class="dripicons-menu"></i>
                 </button>
 
                 <div class="d-none d-sm-block ml-2">
@@ -272,7 +273,7 @@
                             </a>
                         </li>
                     @endif
-                    @if(auth()->user()->role ==1)
+                    @if(auth()->user()->role ==3 || auth()->user()->role ==1 )
                         <li>
                             <a href="{{route('customers')}}" class="waves-effect">
                                 <i class="dripicons-archive"></i>
@@ -284,6 +285,19 @@
                                 <i class="dripicons-user-id"></i>
                                 <span>@lang('static.menu.admins')</span>
                             </a>
+                        </li>
+                    @endif
+                    @if(auth()->user()->role <>4)
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-browser-upload"></i>
+                                <span> @lang('static.menu.forwebsite.website') </span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{route('settings')}}">@lang('static.menu.forwebsite.settings')</a></li>
+                                <li><a href="{{route('about')}}">@lang('static.menu.forwebsite.about')</a></li>
+
+                            </ul>
                         </li>
                     @endif
                     <li>
@@ -368,21 +382,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                © 2020 -
-                <script>
-                    var year = new Date().getFullYear()
-                    if (year != 2020) {
-                        document.write()
-                    }
-                </script>
+                © 2020
+                @php($year=\Carbon\Carbon::now()->year)
+                @if($year !=2020)
+                    <span class="copyright">
+                       - {{$year}}
+                    </span>
+                @endif
                 Pay And Win
             </div>
         </div>
     </div>
 </footer>
 
+@livewireScripts
+
 <!-- JAVASCRIPT -->
-<script src="{{asset('/js/app.js')}}"></script>
+<script src="{{asset('/js/app.js')}}" defer></script>
 <script src="{{asset('/assets/admin/cssjslib/libs/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('/assets/admin/cssjslib/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('/assets/admin/cssjslib/libs/metismenu/metisMenu.min.js')}}"></script>
@@ -390,6 +406,7 @@
 <script src="{{asset('/assets/admin/cssjslib/libs/node-waves/waves.min.js')}}"></script>
 
 <script src="{{asset('/assets/admin/cssjslib/js/app.js')}}"></script>
+
 @yield('js')
 </body>
 </html>

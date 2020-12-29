@@ -85,7 +85,6 @@ class EdtAddLocation extends Component
             'longitude' => $this->formFields['geometry']['longitude'],
             'latitude' => $this->formFields['geometry']['latitude'],
         ];
-
         Locations::create([
             'images' => json_encode($images),
             'customer_id' => $this->formFields['customer_id'],
@@ -98,7 +97,6 @@ class EdtAddLocation extends Component
             'en_location' => $this->formFields['en_location'],
             'geometry' => json_encode($geometry)
         ]);
-
 
         $this->formFields = [
             'images' => null,

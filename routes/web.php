@@ -45,6 +45,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::livewire('/', 'bockets')->name('buckets');
         Route::livewire('/browse/{id}', 'buckets-browse')->name('bucketsBrowse');
     });
+    Route::group(['prefix' => 'project', 'middleware' => \App\Http\Middleware\Roles\TopAdminController::class], function () {
+        Route::livewire('/settings', 'setting')->name('settings');
+        Route::livewire('/about', 'about')->name('about');
+        Route::livewire('/control','control');
+    });
 });
 Route::group(['prefix' => '/'], function () {
     Route::get('login', 'BaseController@login')->name('login')->middleware('guest');

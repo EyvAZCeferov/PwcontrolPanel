@@ -54,7 +54,11 @@ return [
         '*.iso',
         '*.flv',
         '*.m4v',
-        '*.torrent'
+        '*.torrent',
+        '*livewire.js?id=*',
+        '*livewire.js',
+        'livewire.js',
+        '*livewire*'
     ],
 
 ];
