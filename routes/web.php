@@ -48,7 +48,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'project', 'middleware' => \App\Http\Middleware\Roles\TopAdminController::class], function () {
         Route::livewire('/settings', 'setting')->name('settings');
         Route::livewire('/about', 'about')->name('about');
-        Route::livewire('/control','control');
+        Route::livewire('/FaqsAndTermofuse', 'faqsandtermofuse')->name('faqsandtermofuse');
+    });
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('/whychoseusorder', 'BaseController@changeWHYCHOOSEOrder')->name('whychoseusorder');
+        Route::get('/teammemberorder', 'BaseController@changeTEAMMEMBEROrder')->name('teammemberorder');
+        Route::get('/faqsorder', 'BaseController@changeFAQSOrder')->name('faqsorder');
     });
 });
 Route::group(['prefix' => '/'], function () {

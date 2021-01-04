@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teams;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
+use App\Models\WhyChooseUsItems;
+use App\Models\Faq;
 
 class BaseController extends Controller
 {
@@ -51,6 +54,45 @@ class BaseController extends Controller
         App::setLocale($locale);
         Session::put('localization', $locale);
         return redirect('/');
+    }
+
+    public function changeWHYCHOOSEOrder(Request $request)
+    {
+        try {
+            foreach ($request->get('whychooseus_order') as $key => $id) {
+                WhyChooseUsItems::where('id', $id)->update(['order' => $key]);
+            }
+            session()->flash('message', 'Məlumatlar Dəyişdirildi!');
+
+        } catch (\Exception $e) {
+            session()->flash('message', 'Məlumatlar Dəyişdirilmədi!');
+        }
+    }
+
+    public function changeTEAMMEMBEROrder(Request $request)
+    {
+        try {
+            foreach ($request->get('teams_order') as $key => $id) {
+                Teams::where('id', $id)->update(['order' => $key]);
+            }
+            session()->flash('message', 'Məlumatlar Dəyişdirildi!');
+
+        } catch (\Exception $e) {
+            session()->flash('message', 'Məlumatlar Dəyişdirilmədi!');
+        }
+    }
+
+    public function changeFAQSOrder(Request $request)
+    {
+        try {
+            foreach ($request->get('faqs_order') as $key => $id) {
+                Faq::where('id', $id)->update(['order' => $key]);
+            }
+            session()->flash('message', 'Məlumatlar Dəyişdirildi!');
+
+        } catch (\Exception $e) {
+            session()->flash('message', 'Məlumatlar Dəyişdirilmədi!');
+        }
     }
 
     function fallback()

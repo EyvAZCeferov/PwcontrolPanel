@@ -4,19 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class Faq extends Model
 {
-    protected $table = 'abouts';
-    protected $fillable = [
-        'images',
+    protected $table='faqs';
+    protected $fillable=[
+        'image',
         'az_title',
         'ru_title',
         'en_title',
-        'az_motive',
-        'ru_motive',
-        'en_motive',
         'az_description',
         'ru_description',
         'en_description',
+        'order',
     ];
 }

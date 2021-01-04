@@ -26,7 +26,8 @@ return [
         'forwebsite' => [
             'website' => 'Digər',
             'settings' => 'Sazlamalar',
-            'about' => 'Haqqında'
+            'about' => 'Haqqında',
+            'faqsandtermofuse'=>'Faq və İstifadə şərtləri',
         ],
     ],
     'actions' => [
@@ -128,17 +129,35 @@ return [
                     'site_address' => 'Sayt url',
                 ],
             ],
-            'about'=>[
-                'title'=>'Haqqında ayarlamaları',
-                'tabs'=>[
-                    'about'=>'Haqqında',
-                    'whychooseus'=>'Bizi niyə seçməlisiniz?',
-                    'teams'=>'Komanda üzvü',
+            'about' => [
+                'title' => 'Haqqında ayarlamaları',
+                'tabs' => [
+                    'about' => 'Haqqında',
+                    'whychooseus' => 'Bizi niyə seçməlisiniz?',
+                    'teams' => 'Komanda üzvü',
                 ],
-                'form'=>[
-                    'labels'=>[
-                        
+                'tabContent' => [
+                    'form' => [
+                        'labels' => [
+                            'coverImage' => 'Örtük şəkli'
+                        ],
                     ],
+                    'buttons' => [
+                        'showWhyChooseUs' => 'Niyə Bizi seçin düzəltməsi!',
+                        'addWhyChooseUsItem' => 'Səbəblər əlavə et',
+                        'addTeamMember' => 'Komanda üzvü əlavə et'
+                    ],
+                ],
+            ],
+            'faqsTermUseTitle'=>[
+                'tabs'=>[
+                    'faqs'=>'Faqs',
+                    'termofuse'=>'İstifadə şərtləri'
+                ],
+                'tabContent'=>[
+                    'buttons'=>[
+                        'addFaqs'=>'Faq əlavə et'
+                    ]
                 ],
             ],
         ],
@@ -160,6 +179,7 @@ return [
             'select' => [
                 'selectrol' => 'Rolu seç',
                 'selectcustomer' => 'Müştərini seç',
+                'sosialSelect'=>'Sosial şəbəkə hesabını seçin'
             ],
             'picture' => 'Şəkil',
             'pictures' => 'Şəkillər',
@@ -178,8 +198,9 @@ return [
             'post' => [
                 'viewCount' => 'Baxış sayı',
                 'startendtime' => 'Başlanğıc - Son tarix',
-
             ],
+            'order' => 'Sıra №',
+            'social'=>'Sosial Şəbəkələr'
         ],
         'inputs' => [
             'email' => 'Elektron Poçtu daxil et.',

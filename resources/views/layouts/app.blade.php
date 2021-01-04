@@ -27,6 +27,7 @@
     </style>
     @yield('css')
 </head>
+
 <body data-sidebar="dark">
 <!-- Begin page -->
 <div id="layout-wrapper">
@@ -296,7 +297,7 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{route('settings')}}">@lang('static.menu.forwebsite.settings')</a></li>
                                 <li><a href="{{route('about')}}">@lang('static.menu.forwebsite.about')</a></li>
-
+                                <li><a href="{{route('faqsandtermofuse')}}">@lang('static.menu.forwebsite.faqsandtermofuse')</a></li>
                             </ul>
                         </li>
                     @endif
@@ -394,11 +395,9 @@
         </div>
     </div>
 </footer>
-
 @livewireScripts
-
 <!-- JAVASCRIPT -->
-<script src="{{asset('/js/app.js')}}" defer></script>
+<script src="{{asset('/js/app.js')}}"></script>
 <script src="{{asset('/assets/admin/cssjslib/libs/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('/assets/admin/cssjslib/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('/assets/admin/cssjslib/libs/metismenu/metisMenu.min.js')}}"></script>

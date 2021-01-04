@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWhyChooseUsTable extends Migration
+class CreateFaqsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateWhyChooseUsTable extends Migration
      */
     public function up()
     {
-        Schema::create('why_choose_us', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->text('image');
             $table->text('az_title');
             $table->text('ru_title');
             $table->text('en_title');
-            $table->text('cover_image');
+            $table->mediumText('az_description');
+            $table->mediumText('ru_description');
+            $table->mediumText('en_description');
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ class CreateWhyChooseUsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('why_choose_us');
+        Schema::dropIfExists('faqs');
     }
 }

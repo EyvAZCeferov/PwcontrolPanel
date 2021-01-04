@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 class Setting extends Component
 {
 
-    use WithFileUploads; 
+    use WithFileUploads;
 
     public $setting = null, $formFields = [
         'projectName' => null,
@@ -36,7 +36,7 @@ class Setting extends Component
             'projectName' => $settings[0]->projectName,
             'description' => $settings[0]->description,
             'adminUrl' => $settings[0]->adminUrl,
-            'logo' => $settings[0]->logo,
+            'logo' => null,
             'phoneNumb' => $settings[0]->phoneNumb,
             'email' => $settings[0]->email,
             'facebook_page' => $settings[0]->facebook_page,
@@ -51,9 +51,11 @@ class Setting extends Component
 
     public function updateSettings()
     {
-        if (array_key_exists('logo', $this->formFields)) {
-            $this->formFields['logo']->storeAs('commons/logos', 'logo.png', 'uploads');
-            $this->formFields['logo']->storeAs('commons/logos', 'logo.png', 'gcs');
+        if ($this->formFields['logo'] != null) {
+            if (array_key_exists('logo', $this->formFields)) {
+                $this->formFields['logo']->storeAs('commons/logos', 'logo.png', 'uploads');
+                $this->formFields['logo']->storeAs('commons/logos', 'logo.png', 'gcs');
+            }
         }
         Settings::where('id', 1)->update([
             'projectname' => $this->formFields['projectName'],

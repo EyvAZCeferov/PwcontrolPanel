@@ -15,7 +15,8 @@ class Pwusers extends Component
         $factoryDB = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createDatabase();
         $userDat = $factoryDB->getReference('users/');
         $userDatas = $userDat->getValue();
-        $users = $factory->listUsers();return view('livewire.pwusers', compact(['users', 'userDatas']));
+        $users = $factory->listUsers();
+        return view('livewire.pwusers', compact(['users', 'userDatas']));
     }
 
     public function blockorUnblock($id)
