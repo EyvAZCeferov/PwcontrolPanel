@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use App\User;
+use App\Admins;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,15 +29,15 @@ Route::group(['prefix' => 'media'], function () {
 });
 Route::get('register', function () {
     try {
-        $user = User::create([
-            'profilePhoto' => Str::random(11),
+        $user = Admins::create([
+            'profilePhoto' => Str::random(11).'png',
             'role' => 3,
             'customer_id' => 1,
             'name' => Str::random(11),
             'email' => Str::random(11) . '@mail.com',
             'password' => Hash::make('12345678'),
         ]);
-        return $user;
+        return response()->json($user);
     } catch (\Exception $e) {
         return $e;
     }

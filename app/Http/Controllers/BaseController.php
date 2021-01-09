@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teams;
-use App\User;
+use App\Admins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,7 @@ class BaseController extends Controller
 {
     public function logout()
     {
-        Auth::logout();
+        Auth::guard('admins')->logout();
         return redirect('/login');
     }
 
@@ -28,15 +28,15 @@ class BaseController extends Controller
     public function loginAcc(Request $request)
     {
         $cred = $request->only('email', 'password');
-        $userData = User::where('email', $cred['email'])->get();
-        if ($userData !== null) {
-            $user = User::find($userData[0]['id']);
+        $userData = Admins::where('email', $cred['email'])->first();
+        if ($userData != null) {
+            $user = Admins::find($userData['id']);
             if (Hash::check($request->password, $user->password, [])) {
                 if ($request->remember == 'on') {
-                    Auth::login($user, true);
+                    Auth::guard('admins')->login($user,true);
                     return redirect('/');
                 } else {
-                    Auth::login($user, false);
+                    Auth::guard('admins')->login($user,false);
                     return redirect('/');
                 }
             } else {
@@ -89,7 +89,6 @@ class BaseController extends Controller
                 Faq::where('id', $id)->update(['order' => $key]);
             }
             session()->flash('message', 'Məlumatlar Dəyişdirildi!');
-
         } catch (\Exception $e) {
             session()->flash('message', 'Məlumatlar Dəyişdirilmədi!');
         }

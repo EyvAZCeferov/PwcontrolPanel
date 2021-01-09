@@ -1,5 +1,5 @@
-@section('title',$this->post[0]->az_name.' adlı kampaniya')
-@section('pageName',$this->post[0]->az_name.' adlı kampaniya')
+@section('title',$this->post->az_name.' adlı kampaniya')
+@section('pageName',$this->post->az_name.' adlı kampaniya')
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -7,9 +7,9 @@
                 <div class="card">
                     <h1 class=" py-3 title justify-center align-center text-center">Şəkillər</h1>
                     <div class="d-block w-100 d-flex justify-content-around ">
-                        @foreach (json_decode($post[0]->images) as $image)
+                        @foreach (json_decode($post->images) as $image)
                             <img
-                                src="{{asset('/storage/uploads/posts/'.$this->post[0]->clasor.'/'.$image)}}"
+                                src="{{asset('/storage/uploads/posts/'.$this->post->clasor.'/'.$image)}}"
                                 alt="{{$image}}"
                                 class="w-25 d-inline-block"/>
                         @endforeach
@@ -22,22 +22,18 @@
                                 <th>Ad</th>
                                 <th>Name</th>
                                 <th>имя</th>
-                                <th>Kateqoriya</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>
-                                    {{$post[0]->az_name}}
+                                    {{$post->az_name}}
                                 </td>
                                 <td>
-                                    {{$post[0]->en_name}}
+                                    {{$post->en_name}}
                                 </td>
                                 <td>
-                                    {{$post[0]->ru_name}}
-                                </td>
-                                <td>
-                                    {{$post[0]->getCat->az_name}}
+                                    {{$post->ru_name}}
                                 </td>
                             </tr>
                             </tbody>
@@ -53,13 +49,13 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    {{$post[0]->az_description}}
+                                    {{$post->az_description}}
                                 </td>
                                 <td>
-                                    {{$post[0]->en_description}}
+                                    {{$post->en_description}}
                                 </td>
                                 <td>
-                                    {{$post[0]->ru_description}}
+                                    {{$post->ru_description}}
                                 </td>
                             </tr>
                             </tbody>
@@ -77,16 +73,16 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    {{$post[0]->read_count}}
+                                    {{$post->read_count}}
                                 </td>
                                 <td>
-                                    {{\Carbon\Carbon::createFromTimestampUTC($post[0]->startTime)}}
+                                    {{\Carbon\Carbon::createFromTimestampUTC($post->startTime)}}
                                 </td>
                                 <td>
-                                    {{\Carbon\Carbon::createFromTimestamp($post[0]->endTime)}}
+                                    {{\Carbon\Carbon::createFromTimestamp($post->endTime)}}
                                 </td>
                                 <td>
-                                    {{$post[0]->price}}
+                                    {{$post->price}}
                                 </td>
                             </tr>
                             </tbody>

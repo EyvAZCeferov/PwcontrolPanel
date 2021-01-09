@@ -17,11 +17,6 @@
                 element: 'morris-donut-example',
                 data: [
                     {
-                        label: "@lang('static.pages.dashboard.daystatistic.onlineusers')",
-                        value: {{$onlineUsers}},
-                        color: "#7c9d32"
-                    },
-                    {
                         label: "@lang('static.pages.dashboard.daystatistic.allusers')",
                         value: {{count($allUsers)}},
                         color: "#82B5FF"
@@ -62,7 +57,7 @@
                     <div class="col-md-6 col-xl-3">
                         <div class="card text-center">
                             <div class="mb-2 card-body text-muted">
-                                <h3 class="text-info mt-2">{{$onlineUsers}}</h3> @lang('static.pages.dashboard.logincount')
+                                <h3 class="text-info mt-2">{{0}}</h3> @lang('static.pages.dashboard.logincount')
                             </div>
                         </div>
                     </div>
@@ -98,11 +93,7 @@
                                 <h4 class="card-title mb-4">@lang('static.pages.dashboard.daystatistic.dayly')</h4>
 
                                 <div class="row text-center mt-4">
-                                    <div class="col-6">
-                                        <h5 class="mb-2 font-size-18">{{$onlineUsers}}</h5>
-                                        <p class="text-muted text-truncate">@lang('static.pages.dashboard.daystatistic.onlineusers')</p>
-                                    </div>
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <h5 class="mb-2 font-size-18">{{count($allUsers)}}</h5>
                                         <p class="text-muted text-truncate">@lang('static.pages.dashboard.daystatistic.allusers')</p>
                                     </div>

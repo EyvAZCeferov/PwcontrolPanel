@@ -7,12 +7,12 @@ use Livewire\Component;
 
 class PostsBrowse extends Component
 {
-    public $post;
+    public $post=null;
 
     public function mount($id = null)
     {
         Carbon::setLocale('az');
-        $this->post = \App\Models\Posts::where('id', $id)->get();
+        $this->post = \App\Models\Posts::where('id', $id)->first();
     }
 
     public function render()

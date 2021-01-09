@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:admins'], function () {
     Route::livewire('/', 'dashboard')->name('dashboard')->middleware(\App\Http\Middleware\Roles\BucketViewerController::class);
     Route::livewire('/profile/{id}', 'profile')->name('profile');
     Route::get('/logout', 'BaseController@logout')->name('logOut');

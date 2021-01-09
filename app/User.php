@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\UserCards;
+use App\Models\UsersPaying;
+
 
 class User extends Authenticatable
 {
@@ -18,7 +21,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'phoneNumber',
-        'profilePhoto', 'role', 'customer_id', 'name', 'email', 'password',
+        'profilePhoto',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -45,4 +51,15 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at',
     ];
+
+    public function get_cards(){
+        return $this->hasOne(UserCards::class,'uid','uid');
+    }
+
+    public function get_payings(){
+        return $this->hasOne(UsersPaying::class,'uid','uid');
+    }
+
+
+
 }

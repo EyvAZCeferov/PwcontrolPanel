@@ -51,16 +51,16 @@
                         <div class="card">
                             <div class="card-body">
                                 @if($deleted)
-                                    <h4 class="card-title">@lang('static.formFields.validation.deleted',['base'=>@lang('static.menu.media.campaigns')])</h4>
+                                    <h4 class="card-title">@lang('static.formFields.validation.deleted',['base'=>\Lang::get('static.menu.media.campaigns')])</h4>
                                 @else
-                                    <h4 class="card-title">@lang('static.formFields.validation.lists',['base'=>@lang('static.menu.media.campaigns')])</h4>
+                                    <h4 class="card-title">@lang('static.formFields.validation.lists',['base'=>\Lang::get('static.menu.media.campaigns')])</h4>
                                 @endif
                                 <p class="justify-content-lg-around justify-content-md-around">
                                     @if(auth()->user()->role==3 || auth()->user()->role==1)
                                         @if($deleted)
-                                            @lang('static.formFields.validation.indeletedlists',['base'=>@lang('static.menu.media.campaigns')])
+                                            @lang('static.formFields.validation.indeletedlists',['base'=>\Lang::get('static.menu.media.campaigns')])
                                         @else
-                                            @lang('static.formFields.validation.notdeletedlists',['base'=>@lang('static.menu.media.campaigns')])
+                                            @lang('static.formFields.validation.notdeletedlists',['base'=>\Lang::get('static.menu.media.campaigns')])
                                         @endif
                                     @endif
                                     @if(auth()->user()->role==3 || auth()->user()->role==1)
@@ -142,13 +142,21 @@
                                         </td>
                                         <td>
                                             <span class="text-primary">
-                                                {{\Carbon\Carbon::createFromTimestamp($campaign->startTime*1000)}}
+                                                @if($campaign->startTime)
+                                                    @php($start=$campaign->startTime)
+                                                    {{ \Carbon\Carbon::createFromTimestamp($start)->toDateTimeString()  }}
+                                                @endif
                                             </span>
                                             &nbsp;
                                             <span class="text-secondary">-</span>
                                             &nbsp;
                                             <span
-                                                class="text-danger">{{\Carbon\Carbon::createFromTimestamp($campaign->endTime*1000)}}</span>
+                                                class="text-danger">
+                                                @if($campaign->endTime)
+                                                    @php($endTime=$campaign->endTime)
+                                                    {{\Carbon\Carbon::createFromTimestamp($endTime)->toDateTimeString() }}
+                                                @endif
+                                            </span>
                                         </td>
                                         <td>
                                             {{$campaign->price}}

@@ -19,6 +19,10 @@ class CreateCustomersTable extends Migration
             $table->text('az_name');
             $table->text('ru_name');
             $table->text('en_name');
+            $table->mediumText('az_description');
+            $table->mediumText('ru_description');
+            $table->mediumText('en_description');
+            $table->text('slug');
             $table->softDeletes();
             $table->timestamps();
         });

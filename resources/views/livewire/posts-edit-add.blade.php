@@ -28,6 +28,7 @@
     @parent
     <!--tinymce js-->
     <script src="{{asset('/assets/admin/cssjslib/libs/tinymce/tinymce.min.js')}}"></script>
+    <script src="{{asset('/assets/admin/cssjslib/js/pages/form-editor.init.js')}}"></script>
 @endsection
 <div>
     <div class="main-content">
@@ -203,37 +204,6 @@
                             <div class="card">
                                 <div class="card-body w-100 d-flex">
                                     <div class="w-50 d-inline-block">
-                                        <h4 class="card-title">Kateqoriya </h4>
-                                        <p class="card-title-desc">Aşağda qeyd olunmuş sahədən Kateqoriyanızı seçin və
-                                            ya
-                                            redaktə
-                                            edin.</p>
-                                        <select class="form-control" wire:model="formFields.category">
-                                            @if(str_contains($urlPath,'edit'))
-                                                @foreach($categories as $id_category)
-                                                    <option value="{{$id_category['id']}}"
-                                                            @if($id_category['id'] == $post[0]->category)
-                                                            selected
-                                                            value="{{$post[0]->category}}"
-                                                        @endif
-                                                    >
-                                                        {{$id_category['az_name']}}
-                                                    </option>
-                                                @endforeach
-                                            @else
-                                                <option selected value="">Kateqoriyanı seç</option>
-                                                @foreach($categories as $id_category)
-                                                    <option value="{{$id_category['id']}}">
-                                                        {{$id_category['az_name']}}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-
-                                        </select>
-                                        @error('formFields.category') <span
-                                            class="error">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="w-50 d-inline-block">
                                         <h4 class="card-title">Müştəri </h4>
                                         <p class="card-title-desc">Aşağda qeyd olunmuş sahədən Müştərini seçin və
                                             ya
@@ -277,8 +247,12 @@
                                     <h4 class="card-title">Açıqlama</h4>
                                     <p class="card-title-desc">Maksimum 1000 simvoldan ibarət olmalıdır</p>
 
-                                    <textarea class="textArea" wire:model="formFields.az_description"
-                                              name="az_description"></textarea>
+                                    <textarea
+
+                                    rows="5"
+                                    class="form-control"
+                                    wire:model="formFields.az_description"
+                                    name="az_description"  ></textarea>
 
                                     @error('formFields.az_description') <span
                                         class="error">{{ $message }}</span> @enderror
@@ -293,7 +267,10 @@
                                     <h4 class="card-title">Description</h4>
                                     <p class="card-title-desc">Maksimum 1000 simvoldan ibarət olmalıdır</p>
 
-                                    <textarea class="textArea" wire:model="formFields.en_description"
+                                    <textarea
+                                    rows="5"
+                                    class="form-control"
+                                    wire:model="formFields.en_description"
                                               name="en_description"></textarea>
 
                                     @error('formFields.en_description') <span
@@ -311,7 +288,10 @@
                                     <h4 class="card-title">Описание</h4>
                                     <p class="card-title-desc">Maksimum 1000 simvoldan ibarət olmalıdır</p>
 
-                                    <textarea class="textArea" wire:model="formFields.ru_description"
+                                    <textarea
+                                    rows="5"
+                                    class="form-control"
+                                    wire:model="formFields.ru_description"
                                               name="ru_description"></textarea>
 
                                     @error('formFields.ru_description') <span
@@ -399,9 +379,5 @@
             </div>
         </div>
     </div>
-    <!--tinymce js-->
-    <script src="{{asset('/assets/admin/cssjslib/libs/tinymce/tinymce.min.js')}}"></script>
-
-    <!-- init js -->
-    <script src="{{asset('/assets/admin/cssjslib/js/pages/form-editor.init.js')}}"></script>
 </div>
+

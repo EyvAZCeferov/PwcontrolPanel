@@ -223,6 +223,7 @@ return [
         ],
         'actions' => [
             'nullData' => 'Məlumat boşdur.',
+            'error'=>'Xəta yarandı',
         ],
     ],
 ];

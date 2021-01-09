@@ -5,11 +5,11 @@ namespace App\Http\Livewire;
 use Carbon\Carbon;
 use Kreait\Firebase\Factory;
 use Livewire\Component;
+use App\User;
 
 class Pwuserinfo extends Component
 {
     public $userData = null;
-    public $userAuth = null;
     public $notification = [
         'title' => null,
         'content' => null
@@ -17,12 +17,8 @@ class Pwuserinfo extends Component
 
     public function mount($id)
     {
-        (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->signInWithEmailAndPassword('getdata@pw.az', 'getdata_123');
-        $factory = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createDatabase();
-        $factoryUser = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth();
-        $user = $factory->getReference('users/' . $id);
-        $this->userAuth = $factoryUser->getUser($id)->jsonSerialize();
-        $this->userData = $user->getValue();
+        $userData=User::where('uid',$id)->withTrashed()->first();
+        $this->userData = $userData;
     }
 
     public function sendNotify()

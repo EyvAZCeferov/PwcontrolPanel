@@ -16,10 +16,10 @@ class TopAdminController
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role == 3) {
+        if (Auth::guard('admins')->user()->role == 3) {
             return $next($request);
         } else {
-            return redirect(route('profile', Auth::user()->id));
+            return redirect(route('profile', Auth::guard('admins')->user()->id));
         }
     }
 }

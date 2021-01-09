@@ -87,12 +87,12 @@
 
                                     <tbody>
                                     @foreach ($users as $user)
-                                        @if($user->disabled)
+                                        @if($user->trashed())
                                             <tr disabled aria-disabled="disabled" class="disabled bg-soft-dark">
                                                 <td>
-                                                    @if(array_key_exists('profPic',$userDatas[$user->uid]['userInfos']))
-                                                        <img src="{{$userDatas[$user->uid]['userInfos']['profPic']}}"
-                                                             alt="{{$user->email}}"
+                                                    @if(property_exists($user,'profilePhoto'))
+                                                        <img src="{{asset('uploads/users/'.$user->profilePhoto)}}"
+                                                             alt="{{$user->name}}"
                                                              class="rounded-circle avatar-md">
                                                     @else
                                                         <img src="{{asset('assets/commons/images/icon-ios.png')}}"
@@ -100,8 +100,8 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-muted">
-                                                    @if($user->email)
-                                                        {{$user->email}}
+                                                    @if($user->name)
+                                                        {{$user->name}}
                                                     @else
                                                         'Pay And Win'
                                                     @endif
@@ -114,33 +114,17 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-muted">
-                                                    @if(array_key_exists('cards', $userDatas[$user->uid]))
-                                                        @php($cardCount=0)
-                                                        @if(array_key_exists('bonuses', $userDatas[$user->uid]))
-                                                            @php($cardCount+=count($userDatas[$user->uid]['bonuses']))
-                                                        @endif
-                                                        @php($cardCount+=count($userDatas[$user->uid]['cards']))
-                                                        {{$cardCount}}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    {{ $user->get_cards()->where('type','<>','pin')->where('type','<>','bonuscard')->count() }}
                                                 </td>
                                                 <td class="text-muted">
-                                                    @if(array_key_exists('checks', $userDatas[$user->uid]))
-                                                        {{count($userDatas[$user->uid]['checks'])}}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    {{ $user->get_payings()->count() }}
                                                 </td>
                                                 <td class="text-muted">
-                                                    @if(array_key_exists('pinArena', $userDatas[$user->uid]))
-                                                        {{$userDatas[$user->uid]['pinArena']['1']['cardInfo']['price']}}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    @php($pinCard=json_decode($user->get_cards()->where('type','pin')->first()->cardInfos))
+                                                    {{ $pinCard->price }}
                                                 </td>
                                                 <td class="text-muted">
-                                                    {{\Carbon\Carbon::createFromTimestampUTC($user->metadata->lastRefreshAt->getTimestamp())}}
+                                                    {{\Carbon\Carbon::createFromTimestampUTC($user->created_at->getTimestamp())}}
                                                 </td>
                                                 <td class="text-muted">
                                                     <div
@@ -172,9 +156,9 @@
                                         @else
                                             <tr>
                                                 <td>
-                                                    @if(array_key_exists('profPic',$userDatas[$user->uid]['userInfos']))
-                                                        <img src="{{$userDatas[$user->uid]['userInfos']['profPic']}}"
-                                                             alt="{{$user->email}}"
+                                                    @if(property_exists($user,'profilePhoto'))
+                                                        <img src="{{$user->profilePhoto}}"
+                                                             alt="{{$user->name}}"
                                                              class="rounded-circle avatar-md">
                                                     @else
                                                         <img src="{{asset('assets/commons/images/icon-ios.png')}}"
@@ -182,8 +166,8 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($user->email)
-                                                        {{$user->email}}
+                                                    @if($user->name)
+                                                        {{$user->name}}
                                                     @else
                                                         'Pay And Win'
                                                     @endif
@@ -196,44 +180,21 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if(array_key_exists('cards', $userDatas[$user->uid]))
-                                                        @php($cardCount=0)
-                                                        @if(array_key_exists('bonuses', $userDatas[$user->uid]))
-                                                            @php($cardCount+=count($userDatas[$user->uid]['bonuses']))
-                                                        @endif
-                                                        @php($cardCount+=count($userDatas[$user->uid]['cards']))
-                                                        {{$cardCount}}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    {{ $user->get_cards()->where('type','<>','pin')->where('type','<>','bonuscard')->count() }}
                                                 </td>
                                                 <td>
-                                                    @if(array_key_exists('checks', $userDatas[$user->uid]))
-                                                        {{count($userDatas[$user->uid]['checks'])}}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    {{ $user->get_payings()->count() }}
                                                 </td>
                                                 <td>
-                                                    @if(array_key_exists('pinArena', $userDatas[$user->uid]))
-                                                        {{$userDatas[$user->uid]['pinArena']['1']['cardInfo']['price']}}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    @php($pinCard=json_decode($user->get_cards()->where('type','pin')->first()->cardInfos))
+                                                    {{ $pinCard->price }}
                                                 </td>
                                                 <td>
-                                                    {{\Carbon\Carbon::createFromTimestampUTC($user->metadata->createdAt->getTimestamp())}}
+                                                    {{\Carbon\Carbon::createFromTimestampUTC($user->created_at->getTimestamp())}}
                                                 </td>
                                                 <td>
                                                     <div
                                                         class="btn-group center justify-center text-center align-center">
-                                                        <button class="btn btn-lg btn-danger"
-                                                                data-toggle="tooltip"
-                                                                data-placement="top" title="Sil"
-                                                                wire:click="delete('{{$user->uid}}')"
-                                                        >
-                                                            <i class="mdi mdi-trash-can-outline"></i>
-                                                        </button>
                                                         <button
                                                             data-toggle="tooltip"
                                                             data-placement="top" title="Blok et!"

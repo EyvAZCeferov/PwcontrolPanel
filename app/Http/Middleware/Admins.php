@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Middleware\Roles;
+namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class BucketViewerController
+class Admins
 {
     /**
      * Handle an incoming request.
@@ -16,10 +15,9 @@ class BucketViewerController
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('admins')->user()->role <> 4) {
+        if(auth()->user()){
             return $next($request);
-        } else {
-            return redirect(route('profile', Auth::guard('admins')->user()->id));
         }
+        return redirect('/')->with('error',"Only admin can access!");
     }
 }

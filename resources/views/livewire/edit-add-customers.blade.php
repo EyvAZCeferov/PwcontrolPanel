@@ -1,27 +1,27 @@
 @section('title')
     @if($urlPath)
         @if (str_contains($urlPath,'add'))
-            @lang('static.actions.add') @lang('static.menu.customers')
+            @lang('static.actions.add') @lang('statiic.menu.customers')
         @else
             @if($customer[0])
-                {{$customer[0]->az_name}}    @lang('static.actions.edit') @lang('static.menu.categories')
+                {{$customer[0]->az_name}}    @lang('static.actions.edit') @lang('static.menu.customers')
             @endif
         @endif
     @else
-        @lang('static.actions.add') @lang('static.menu.customers')
+        @lang('static.actions.add') @lang('statiic.menu.customers')
     @endif
 @endsection
 @section('pageName')
     @if($urlPath)
         @if (str_contains($urlPath,'add'))
-            @lang('static.actions.add') @lang('static.menu.customers')
+            @lang('static.actions.add') @lang('statiic.menu.customers')
         @else
             @if($customer[0])
-                {{$customer[0]->az_name}}    @lang('static.actions.edit') @lang('static.menu.categories')
+                {{$customer[0]->az_name}}    @lang('static.actions.edit') @lang('static.menu.customers')
             @endif
         @endif
     @else
-        @lang('static.actions.add') @lang('static.menu.customers')
+        @lang('static.actions.add') @lang('statiic.menu.customers')
     @endif
 @endsection
 <div>
@@ -145,6 +145,65 @@
                                         @endif
                                     />
                                     @error('formFields.ru_name') <span class="error">{{ $message }}</span> @enderror
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h4 class="card-title">Açıqlama</h4>
+                                    <p class="card-title-desc">@lang('static.formFields.validation.max',['symbol'=>'1000'])</p>
+
+                                    <textarea row="8" class="form-control" maxlength="1000"
+                                           wire:model.debounce.500ms="formFields.az_description"
+                                    >
+                                    @if (str_contains($urlPath,'edit'))
+                                    {{$customer[0]->az_description}}
+                                    @endif
+                                </textarea>
+                                    @error('formFields.az_description') <span class="error">{{ $message }}</span> @enderror
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h4 class="card-title">Description</h4>
+                                    <p class="card-title-desc">@lang('static.formFields.validation.max',['symbol'=>'1000'])</p>
+
+                                    <textarea row="8" class="form-control" maxlength="1000"
+                                           wire:model.debounce.500ms="formFields.en_description"
+
+                                    >
+                                    @if (str_contains($urlPath,'edit'))
+                                    {{$customer[0]->en_description}}
+                                    @endif
+                                </textarea>
+                                    @error('formFields.en_description') <span class="error">{{ $message }}</span> @enderror
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h4 class="card-title">Описание</h4>
+                                    <p class="card-title-desc">@lang('static.formFields.validation.max',['symbol'=>'1000'])</p>
+
+                                    <textarea row="8" class="form-control" maxlength="1000"
+                                           wire:model.debounce.500ms="formFields.ru_description"
+
+                                    >
+                                    @if (str_contains($urlPath,'edit'))
+                                    {{$customer[0]->ru_description}}
+                                    @endif
+                                </textarea>
+                                    @error('formFields.ru_description') <span class="error">{{ $message }}</span> @enderror
 
                                 </div>
                             </div>

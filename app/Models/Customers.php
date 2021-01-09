@@ -18,6 +18,10 @@ class Customers extends Model
         'az_name',
         'ru_name',
         'en_name',
+        'az_description',
+        'ru_description',
+        'en_description',
+        'slug'
     ];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 

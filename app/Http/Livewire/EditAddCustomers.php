@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Customers;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
+
 
 class EditAddCustomers extends Component
 {
@@ -15,6 +17,9 @@ class EditAddCustomers extends Component
         'az_name' => null,
         'ru_name' => null,
         'en_name' => null,
+        'az_description'=>null,
+        'ru_description'=>null,
+        'en_description'=>null,
     ];
 
     public function mount($id = null)
@@ -26,6 +31,9 @@ class EditAddCustomers extends Component
                 'az_name' => $this->customer[0]->az_name,
                 'ru_name' => $this->customer[0]->ru_name,
                 'en_name' => $this->customer[0]->en_name,
+                'az_description'=>$this->customer[0]->az_description,
+                'ru_description'=>$this->customer[0]->ru_description,
+                'en_description'=>$this->customer[0]->en_description,
             ];
         }
     }
@@ -37,6 +45,9 @@ class EditAddCustomers extends Component
             'formFields.az_name' => 'required|max:300',
             'formFields.ru_name' => 'required|max:300',
             'formFields.en_name' => 'required|max:300',
+            'formFields.az_description' => 'required|max:1000',
+            'formFields.ru_description' => 'required|max:1000',
+            'formFields.en_description' => 'required|max:1000',
         ];
     }
 
@@ -50,12 +61,19 @@ class EditAddCustomers extends Component
             'az_name' => $this->formFields['az_name'],
             'ru_name' => $this->formFields['ru_name'],
             'en_name' => $this->formFields['en_name'],
+            'az_description'=>$this->formFields['az_description'],
+            'ru_description'=>$this->formFields['ru_description'],
+            'en_description'=>$this->formFields['en_description'],
+            'slug'=>Str::slug($this->formFields['az_name'])
         ]);
         $this->formFields = [
             'logo' => null,
             'az_name' => null,
             'ru_name' => null,
             'en_name' => null,
+            'az_description'=> null,
+            'ru_description'=> null,
+            'en_description'=> null,
         ];
         session()->flash('message', 'Məlumatlar əlavə edildi!');
         $this->redirect('/customers');
@@ -71,12 +89,19 @@ class EditAddCustomers extends Component
             'az_name' => $this->formFields['az_name'],
             'ru_name' => $this->formFields['ru_name'],
             'en_name' => $this->formFields['en_name'],
+            'az_description'=>$this->formFields->az_description,
+            'ru_description'=>$this->formFields->ru_description,
+            'en_description'=>$this->formFields->en_description,
+            'slug'=>Str::slug($this->formFields['az_name'])
         ]);
         $this->formFields = [
             'logo' => null,
             'az_name' => null,
             'ru_name' => null,
             'en_name' => null,
+            'az_description'=>null,
+            'ru_description'=>null,
+            'en_description'=>null,
         ];
         session()->flash('message', 'Məlumatlar dəyişdirildi!');
         $this->redirect('/customers');
