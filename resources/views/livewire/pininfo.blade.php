@@ -1,6 +1,6 @@
-@section('title',$userData['userInfos']['email'])
+@section('title',$userData->name)
 @section('pageName')
-    @lang('static.pages.pininfo.title',['user'=>$userData['userInfos']['email']])
+    @lang('static.pages.pininfo.title',['user'=>$userData->name])
 @endsection
 <div>
     <div class="main-content">
@@ -8,21 +8,23 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4 col-xl-1">
-                        <a href="{{route('pwuserinfo',$userData['userInfos']['uid'])}}"
+                        <a href="{{route('pwuserinfo',$userData->uid)}}"
                            class="btn btn-lg btn-outline-info">
                             <i class="mdi mdi-keyboard-backspace"></i>
                         </a>
                     </div>
                     <div class="col-md-4 col-xl-4">
-                        @if(array_key_exists('profPic', $userData['userInfos']))
-                            <img src="{{$userData['userInfos']['profPic']}}"
-                                 alt="{{$userData['userInfos']['email']}}" class="rounded-circle avatar-md">
+                        @if(property_exists($userData,'profilePhoto'))
+                            <img src="{{asset('uploads/users/'.$userData->profilePhoto)}}"
+                                    alt="{{$userData->name}}"
+                                    class="rounded-circle avatar-md">
                         @else
                             <img src="{{asset('assets/commons/images/icon-ios.png')}}"
-                                 alt="Pw Logo" class="rounded-circle avatar-md">
+                                    alt="Pw Logo" class="rounded-circle avatar-md">
                         @endif
-                        <span class="text-capitalize font-size-30 font-weight-bolder"> @if(array_key_exists('email', $userData['userInfos']))
-                                {{$userData['userInfos']['email']}}
+                        <span class="text-capitalize font-size-30 font-weight-bolder">
+                            @if($userData->name)
+                                {{$userData->name}}
                             @else
                                 'Pay And Win'
                             @endif
@@ -30,22 +32,21 @@
                     </div>
                     <div class="col-md-4 col-xl-5 right flex-row-reverse text-right ">
                         <p class="text-right">
-                            @if(array_key_exists('phoneNumb', $userData['userInfos']))
-                                <span
-                                    class="font-size-15">Telefon nömrəsi: <strong>{{$userData['userInfos']['phoneNumb']}}</strong> </span>
-                            @endif
+
+                        <span
+                            class="font-size-15">Telefon nömrəsi: <strong>{{$userData->phoneNumber}}</strong> </span>
                         </p>
                         <p class="text-right">
                             <span>Sonuncu aktivlik tarixi:
-                                @php($lastSeen=\Carbon\Carbon::createFromTimestampUTC($userAuth['metadata']->lastLoginAt->getTimestamp()))
+                                @php($lastSeen=\Carbon\Carbon::createFromTimestampUTC($userData->created_at->getTimestamp()))
                                 @php(\Carbon\Carbon::setLocale('az'))
                                 <strong class="text-primary">{{$lastSeen->diffForHumans()}}</strong> </span>
                         </p>
                         <p class="text-right">
-                            @if(array_key_exists('pinArena', $userData))
-                                <span
-                                    class="font-size-15">Pinlərinin sayı: <strong>{{$userData['pinArena'][1]['cardInfo']['price']}}</strong> </span>
-                            @endif
+                            @php($pininfos=json_decode($pininfo->cardInfos))
+                            <span
+                                class="font-size-15">Pinlərinin sayı:
+                                 <strong>{{$pininfos->price}}</strong> </span>
                         </p>
                         <p class="text-right">
                             <button wire:click="resetPin" class="btn btn-danger btn-lg" data-toggle="tooltip"
@@ -77,73 +78,47 @@
                                                 <strong>@lang('static.pages.pininfo.bonushistory')</strong>
                                             </h3>
                                         </div>
-                                        @if (array_key_exists('shoppings',$userData['pinArena'][1]))
-                                            <div>
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
+                                        @if ($pininfo)
+                                        <div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
                                                         <tr>
-                                                            <td>
-                                                                <strong>@lang('static.pages.usercheck.organization')</strong>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <strong>@lang('static.pages.usercheck.qyt')</strong>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <strong>@lang('static.pages.dashboard.latesttransactions.price')</strong>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <strong>@lang('static.pages.dashboard.latesttransactions.date')</strong>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <strong>@lang('static.pages.pininfo.bonus')</strong>
-                                                            </td>
+                                                            <th>
+                                                                <strong>
+                                                                    @lang('static.page.profile.pininfo.table.organization')
+                                                                </strong>
+                                                            </th>
+                                                            <th class="text-center">
+                                                                <strong>@lang('static.page.shopping.cartlist.tableheader.qyt')</strong>
+                                                            </th>
+                                                            <th class="text-center">
+                                                                <strong>@lang('static.page.shopping.wishlist.tableheader.price')</strong>
+                                                            </th>
+                                                            <th class="text-center">
+                                                                <strong>@lang('static.page.profile.pininfo.table.date')</strong>
+                                                            </th>
+                                                            <th class="text-right">
+                                                                <strong>@lang('static.page.profile.pininfo.table.bonus')</strong>
+                                                            </th>
                                                         </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @foreach($userData['pinArena'][1]['shoppings'] as $shop)
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($payinfo as $info)
                                                             <tr>
                                                                 <td>
-                                                                    @if(array_key_exists($shop['checkId'],$userData['checks']))
-                                                                        {{$userData['checks'][$shop['checkId']]['market']}}
-                                                                    @endif
+
                                                                 </td>
-                                                                <td class="text-center">
-                                                                    @if(array_key_exists('checks',$shop))
-                                                                        {{count($shop['checks'])}}
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    @if(array_key_exists('checks',$shop))
-                                                                        @php($val=null)
-                                                                        @foreach($shop['checks'] as $check)
-                                                                            @php($val+=$check['price'])
-                                                                        @endforeach
-                                                                        {{$val}}
-                                                                    @else
-                                                                        0
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    {{\Carbon\Carbon::createFromTimestampUTC($shop['date'])}}
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    {{$shop['bonuse']}}
-                                                                    <i class="mdi mdi-arrow-up text-primary"></i>
+                                                                <td>
+                                                                    <a href="{{ route('payed-product-info',) }}">
+                                                                    Get</a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="d-print-none">
-                                                    <div class="float-right">
-                                                        <a href="javascript:window.print()"
-                                                           class="btn btn-success waves-effect waves-light"><i
-                                                                class="fa fa-print"></i></a>
-                                                    </div>
-                                                </div>
+                                                    </tbody>
+                                                </table>
                                             </div>
+                                        </div>
                                         @else
                                             <div class="alert alert-danger w-100" role="alert">
                                                 <strong>Tarixçə boşdur</strong>
@@ -169,63 +144,33 @@
                                             <h3 class="panel-title font-size-20"><strong>Ödəniş tarixçəsi</strong>
                                             </h3>
                                         </div>
-                                        @if (array_key_exists('ordering',$userData['pinArena'][1]))
+                                        @if (true)
                                             <div>
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <thead>
-                                                        <tr>
-                                                            <td><strong>Qurum</strong></td>
-                                                            <td class="text-center"><strong>Miqdar</strong></td>
-                                                            <td class="text-center"><strong>Qiymət</strong>
-                                                            </td>
-                                                            <td class="text-center"><strong>Tarix</strong>
-                                                            </td>
-                                                            <td class="text-right"><strong>Bonus</strong></td>
-                                                        </tr>
+                                                            <tr>
+                                                                <th>
+                                                                    <strong>@lang('static.page.profile.pininfo.table.organization')</strong>
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    <strong>@lang('static.page.shopping.cartlist.tableheader.qyt')</strong>
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    <strong>@lang('static.page.shopping.wishlist.tableheader.price')</strong>
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    <strong>@lang('static.page.profile.pininfo.table.date')</strong>
+                                                                </th>
+                                                                <th class="text-right">
+                                                                    <strong>@lang('static.page.profile.pininfo.table.bonus')</strong>
+                                                                </th>
+                                                            </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($userData['pinArena'][1]['ordering'] as $shop)
-                                                            <tr>
-                                                                <td>
-                                                                    @if(array_key_exists($shop['checkId'],$userData['checks']))
-                                                                        {{$userData['checks'][$shop['checkId']]['market']}}
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    @if(array_key_exists('checks',$shop))
-                                                                        {{count($shop['checks'])}}
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    @if(array_key_exists('checks',$shop))
-                                                                        @php($val=null)
-                                                                        @foreach($shop['checks'] as $check)
-                                                                            @php($val+=$check['price'])
-                                                                        @endforeach
-                                                                        {{$val}}
-                                                                    @else
-                                                                        0
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    {{\Carbon\Carbon::createFromTimestampUTC($shop['date'])}}
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    {{$shop['bonuse']}}
-                                                                    <i class="mdi mdi-arrow-down text-danger"></i>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                            <tr></tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                                <div class="d-print-none">
-                                                    <div class="float-right">
-                                                        <a href="javascript:window.print()"
-                                                           class="btn btn-success waves-effect waves-light"><i
-                                                                class="fa fa-print"></i></a>
-                                                    </div>
                                                 </div>
                                             </div>
                                         @else

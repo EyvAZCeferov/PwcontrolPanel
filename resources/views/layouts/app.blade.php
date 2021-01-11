@@ -229,6 +229,11 @@
                                             <span>@lang('static.menu.locations')</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('comments') }}">
+                                            <span>@lang('static.menu.comments')</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

@@ -23,6 +23,7 @@ return [
         'admins' => 'Adminlər',
         'settings' => 'Tənzimləmələr',
         'buckets' => 'Səbət',
+        'comments'=>'Şərhlər',
         'forwebsite' => [
             'website' => 'Digər',
             'settings' => 'Sazlamalar',
@@ -161,6 +162,125 @@ return [
                 ],
             ],
         ],
+        'comments'=>[
+            'descb'=>'Komentlərə nəzarət edə bilərsiniz.'
+        ],
+    ],
+    'page'=>[
+        'shopping'=>[
+            'wishlist'=>[
+                'tableheader'=>[
+                    'productName'=>'Məhsul',
+                    'price'=>'Qiymət',
+                    'stockstat'=>[
+                        'title'=>'Stok statutusu',
+                        'inStock'=>'Stok da',
+                        'outStock'=>'Qurtarıb',
+                    ],
+                    'addToCart'=>'Karta əlavə et'
+                ],
+            ],
+            'cartlist'=>[
+                'tableheader'=>[
+                    'total'=>'Ümumi',
+                    'qyt'=>'Miqdar',
+                ],
+                'other'=>[
+                    'subtotal'=>'Yekun',
+                    'clearCart'=>'Kartı sıfırla',
+                    'updateCart'=>'Kartı yenilə',
+                    'continueCart'=>'Ödəməyə davam et',
+                ],
+            ],
+            'checkout'=>[
+                'other'=>[
+                    'endShopping'=>'Ödənişi təsdiqlə',
+                    'cupponCode'=>'Kupon kodu',
+                    'payingcards'=>'Ödəniş kartları',
+                    'bonuscards'=>'Bonus kartları',
+                    'selectcard'=>'Bir kart Seçin',
+                ],
+                'order'=>[
+                    'yourOrder'=>'Sizin sifariş',
+                ],
+            ],
+            'order'=>[
+                'other'=>[
+                    'describe'=>'Ödənişiniz üçün təşəkkürlər :)'
+                ],
+            ],
+            'track'=>[
+                'other'=>[
+                    'describe'=>'Sifariş "İD"-nizi daxil edin.',
+                    'orderId'=>'Sifariş İD',
+                    'track'=>'İzlə',
+                ],
+            ],
+        ],
+        'profile'=>[
+            'tabs'=>[
+                'dashboard'=>'İdarə paneli',
+                'cards'=>'Kartlar',
+                'payed'=>'Ödənişlər',
+                'settings'=>'Sazlamalar',
+                'logout'=>'Çıxış et',
+            ],
+            'table'=>[
+                'columns'=>[
+                    'icon'=>'İkon',
+                    'number'=>'Kart nömrəsi',
+                    'expirationDate'=>'Bitmə tarixi',
+                    'remove'=>'Sil',
+                    'money'=>'Məbləğ',
+                    'market'=>'Market',
+                    'payedCart'=>'Ödənilmiş kart',
+                    'edvreturn'=>'Ədv geri al',
+                    'buttons'=>'Düymələr'
+                ],
+            ],
+            'settings'=>[
+                'form'=>[
+                    'labels'=>[
+                        'profilePicture'=>'Şəkil seç',
+                        'birthday'=>'Doğum tarixi',
+                    ],
+                    'buttons'=>[
+                        'savechanges'=>'Yadda saxla'
+                    ],
+                ],
+            ],
+            'addCart'=>[
+                'columns'=>[
+                    'nameAndSurname'=>'Ad Soyad',
+                    'cardholderName'=>'Kart sahibi adı',
+                    'securityCode'=>'Güvənlik şifrəsi',
+                    'generate'=>'Nümunə göstər',
+                    'cartPass'=>'Kartın şifrəsi'
+                ],
+            ],
+            'pininfo'=>[
+                'headers'=>[
+                    'pins'=>'Pinlərim',
+                    'justPins'=>'Hazırki pinlərim :count',
+                    'pinpaying'=>'Pinlə ödə',
+                    'bonushistory'=>'Bonus tarixçəsi',
+                    'payinghistory'=>'Ödəniş tarixçəsi',
+                    'nullhistory'=>'Tarixçə boşdur',
+                ],
+                'table'=>[
+                    'organization'=>'Qurum',
+                    'date'=>'Tarix',
+                    'bonus'=>'Bonus',
+                    'description'=>'Açıqlama',
+                    'location'=>'Məkan',
+                    'contact'=>'Əlaqə',
+                    'pin'=>'Pin'
+                ],
+                'actions'=>[
+                    'buy'=>'Al'
+                ],
+            ],
+        ],
     ],
     'adminroles' => [
         'customer' => 'Müştəri',
@@ -176,6 +296,8 @@ return [
             'changepicture' => 'Şəkli Dəyişdirmək üçün seçin',
             'selectpicture' => 'Şəkli seç',
             'name' => 'Ad',
+            'url'=>'Url',
+            'comment'=>'Koment məzmun',
             'select' => [
                 'selectrol' => 'Rolu seç',
                 'selectcustomer' => 'Müştərini seç',

@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Kreait\Firebase\Factory;
 use Livewire\Component;
 use App\User;
+use App\Models\UsersCards;
+use App\Models\UsersPaying;
+
 
 class Pwuserinfo extends Component
 {
@@ -29,7 +32,7 @@ class Pwuserinfo extends Component
         ]);
 
         $factory = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createDatabase();
-        $ref = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/notifications/');
+        $ref = $factory->getReference('users/' . $this->userData->uid . '/notifications/');
         $key = $ref->push()->getKey();
         $ref->getChild($key)->set(
             [
@@ -44,29 +47,23 @@ class Pwuserinfo extends Component
             'title' => null,
             'content' => null
         ];
+        $this->mount($this->userData->uid);
     }
 
     public function delete($id, $type)
     {
-        $factory = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createDatabase();
         switch ($type) {
             case "cards":
-                $ref = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/cards/' . $id);
-                $ref->remove();
-                break;
-            case "bonuses":
-                $ref = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/bonuses/' . $id);
-                $ref->remove();
+                UserCards::where('cardId',$id)->forceDelete();
                 break;
             case "checks":
-                $ref = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/checks/' . $id);
-                $ref->remove();
+                UsersPaying::where('pay_id',$id)->forceDelete();
                 break;
             default:
                 session()->flash('message', 'Xəta yarandı daha sonra yoxlayın!');
         }
         session()->flash('message', 'Seçdiyiniz kart Silindi!');
-        $this->mount($this->userData['userInfos']['uid']);
+        $this->mount($this->userData->uid);
     }
 
     public function render()

@@ -4,32 +4,38 @@ namespace App\Http\Livewire;
 
 use Kreait\Firebase\Factory;
 use Livewire\Component;
+use App\User;
+use App\Models\UserCards;
+use App\Models\UsersPaying;
 
 class Pininfo extends Component
 {
-    public $userData, $userAuth;
+    public $userData=null,$pininfo=null,$payinfo=null;
 
     public function mount($id)
     {
-        (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->signInWithEmailAndPassword('getdata@pw.az', 'getdata_123');
-        $token = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createIdTokenVerifier();
-        $verify=(new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->withGoogleAuthTokenCredentials($token);
-        $factory = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createDatabase();
-        $user = $factory->getReference('users/' . $id);
-        $factoryUser = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth();
-        $this->userAuth = $factoryUser->getUser($id)->jsonSerialize();
-        $this->userData = $user->getValue();
+        $userData=User::where('uid',$id)->withTrashed()->first();
+        $this->userData = $userData;
+        $pininfo=UserCards::where('type','pin')->first();
+        $this->pininfo = $pininfo;
+        $payinfo=UsersPaying::where('uid',$id)->get();
+        $this->payinfo = $payinfo;
     }
 
     public function resetPin()
     {
         $factory = (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createDatabase();
-        $infoRef = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/pinArena/1/cardInfo/');
+        $infoRef = $factory->getReference('users/' .$this->userData->uid . '/cards/'.$this->pininfo->cardId.'/cardInfo/');
         $infoRef->update([
             'price' => 0
         ]);
-        $shopRef = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/pinArena/1/shoppings');
-        $orderRef = $factory->getReference('users/' . $this->userData['userInfos']['uid'] . '/pinArena/1/ordering');
+        $lastDatas=json_decode($this->pininfo->cardInfos);
+        $lastDatas['price']=0;
+        UsersPaying::where('uid',$id)->update([
+            'cardInfos'=>json_encode($lastDatas),
+        ]);
+        $shopRef = $factory->getReference('users/' .$this->userData->uid . '/cards/'.$this->pininfo->cardId.'/shoppings');
+        $orderRef = $factory->getReference('users/' .$this->userData->uid . '/cards/'.$this->pininfo->cardId.'/ordering');
         $shopRef->remove();
         $orderRef->remove();
         session()->flash('message', 'Pin Bonusları, Alış-verişləri sıfırlandı!');

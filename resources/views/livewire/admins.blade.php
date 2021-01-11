@@ -56,14 +56,14 @@
                                     <h4 class="card-title">@lang('static.formFields.validation.lists',['base'=>'Adminlərin'])</h4>
                                 @endif
                                 <p class="justify-content-lg-around justify-content-md-around">
-                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                    @if(auth()->guard('admins')->user()->role==3 || auth()->guard('admins')->user()->role==1)
                                         @if($deleted)
                                             @lang('static.formFields.validation.indeletedlists',['base'=>'Adminlərin'])
                                         @else
                                             @lang('static.formFields.validation.notdeletedlists',['base'=>'Adminlərin'])
                                         @endif
                                     @endif
-                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                    @if(auth()->guard('admins')->user()->role==3 || auth()->guard('admins')->user()->role==1)
                                         <a data-toggle="tooltip"
                                            data-placement="top" title="@lang('static.actions.add')"
                                            data-title="@lang('static.actions.add')"
@@ -108,7 +108,7 @@
                                     <th>@lang('static.formFields.labels.name')</th>
                                     <th>@lang('static.formFields.labels.email')</th>
                                     <th>@lang('static.formFields.labels.role')</th>
-                                    @if(auth()->user()->role==3)
+                                    @if(auth()->guard('admins')->user()->role==3)
                                         <th>@lang('static.actions.buttons')</th>
                                     @endif
                                 </tr>
@@ -135,7 +135,7 @@
                                                 @endif
                                             @endfor
                                         </td>
-                                        @if(auth()->user()->role==3)
+                                        @if(auth()->guard('admins')->user()->role==3)
                                             <td>
                                                 @if($deleted)
                                                     <div

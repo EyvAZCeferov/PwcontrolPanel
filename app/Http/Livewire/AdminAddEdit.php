@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\User;
+use App\Admins as Admin;
 
 class AdminAddEdit extends Component
 {
@@ -44,7 +44,7 @@ class AdminAddEdit extends Component
         $this->urlPath = request()->path();
         $this->customers = Customers::all();
         if ($id !== null) {
-            $this->admin = User::where('id', $id)->get();
+            $this->admin = Admin::where('id', $id)->get();
             $this->formFields = [
                 'role' => $this->admin[0]->role,
                 'customer_id' => $this->admin[0]->customer_id,
@@ -71,7 +71,7 @@ class AdminAddEdit extends Component
     {
         $uniqueName = Str::slug($this->formFields['name']);
         $this->formFields['profilePhoto']->storeAs('admins', $uniqueName . '.png', 'uploads');
-        User::create([
+        Admin::create([
             'profilePhoto' => $uniqueName . '.png',
             'role' => $this->formFields['role'],
             'customer_id' => $this->formFields['customer_id'] ? $this->formFields['customer_id'] : 1,
@@ -99,7 +99,7 @@ class AdminAddEdit extends Component
                 $this->formFields['profilePhoto']->storeAs('admins', $this->admin[0]->profilePhoto, 'uploads');
             }
         }
-        User::where('id', $this->admin[0]->id)->update([
+        Admin::where('id', $this->admin[0]->id)->update([
             'role' => $this->formFields['role'],
             'customer_id' => $this->formFields['customer_id'] ? $this->formFields['customer_id'] : 1,
             'name' => $this->formFields['name'],

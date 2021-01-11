@@ -56,14 +56,14 @@
                                     <h4 class="card-title">@lang('static.formFields.validation.lists',['base'=>\Lang::get('static.menu.media.campaigns')])</h4>
                                 @endif
                                 <p class="justify-content-lg-around justify-content-md-around">
-                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                    @if(auth()->guard('admins')->user()->role==3 || auth()->guard('admins')->user()->role==1)
                                         @if($deleted)
                                             @lang('static.formFields.validation.indeletedlists',['base'=>\Lang::get('static.menu.media.campaigns')])
                                         @else
                                             @lang('static.formFields.validation.notdeletedlists',['base'=>\Lang::get('static.menu.media.campaigns')])
                                         @endif
                                     @endif
-                                    @if(auth()->user()->role==3 || auth()->user()->role==1)
+                                    @if(auth()->guard('admins')->user()->role==3 || auth()->guard('admins')->user()->role==1)
                                         <a data-toggle="tooltip"
                                            data-placement="top" title="@lang('static.actions.add')"
                                            data-title="@lang('static.actions.add')"

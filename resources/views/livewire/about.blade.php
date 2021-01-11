@@ -410,10 +410,10 @@
                             <div class="tab-content">
                                 <div class="tab-pane active p-3" id="home-1" role="tabpanel">
 
-                                    @if (array_key_exists('images', $this->formFields['about']))
+                                    @if ($this->about[0]->images !=null)
                                         <div class="w-100"
                                              style="scroll-behavior: auto; overflow-scrolling: touch; overflow-y: hidden; overflow-x: scroll;">
-                                            @foreach(json_decode($this->formFields['about']['images']) as $image)
+                                            @foreach(json_decode($this->about[0]->images) as $image)
                                                 <div class="d-inline-block w-25 position-relative">
                                                     <img
                                                         src="{{asset('/storage/uploads/about/aboutImages/'.$image)}}"
@@ -658,7 +658,7 @@
                                                         <th>@lang('static.formFields.labels.name')</th>
                                                         <th>@lang('static.formFields.labels.description')</th>
                                                         <th>@lang('static.formFields.labels.order')</th>
-                                                        @if(auth()->user()->role==3)
+                                                        @if(auth()->guard('admins')->user()->role==3)
                                                             <th>@lang('static.actions.buttons')</th>
                                                         @endif
                                                     </tr>
@@ -685,7 +685,7 @@
                                                                 <td>
                                                                     {{$item->order}}
                                                                 </td>
-                                                                @if(auth()->user()->role==3)
+                                                                @if(auth()->guard('admins')->user()->role==3)
                                                                     <td>
                                                                         <div
                                                                             class="btn-group center justify-center text-center align-center">
@@ -746,7 +746,7 @@
                                                         <th>@lang('static.formFields.labels.name')</th>
                                                         <th>@lang('static.formFields.labels.email')</th>
                                                         <th>@lang('static.formFields.labels.order')</th>
-                                                        @if(auth()->user()->role==3)
+                                                        @if(auth()->guard('admins')->user()->role==3)
                                                             <th>@lang('static.actions.buttons')</th>
                                                         @endif
                                                     </tr>
@@ -773,7 +773,7 @@
                                                                 <td>
                                                                     {{$item->order}}
                                                                 </td>
-                                                                @if(auth()->user()->role==3)
+                                                                @if(auth()->guard('admins')->user()->role==3)
                                                                     <td>
                                                                         <div
                                                                             class="btn-group center justify-center text-center align-center">

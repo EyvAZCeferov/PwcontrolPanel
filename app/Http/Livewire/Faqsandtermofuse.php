@@ -8,7 +8,7 @@ use Livewire\Component;
 use App\Models\Faq;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\TermofUse;
 
 class Faqsandtermofuse extends Component
 {
@@ -24,12 +24,34 @@ class Faqsandtermofuse extends Component
             'ru_description' => null,
             'en_description' => null,
         ],
-    ], $faqs = null, $user = null;
+        'termofuse'=>[
+            'az_description' => null,
+            'ru_description' => null,
+            'en_description' => null,
+        ],
+    ], $faqs = null,$termofuse=null;
 
 
     public function mount()
     {
         $this->faqs = Faq::orderBy('order', 'DESC')->get();
+        $this->termofuse=TermofUse::where('id',1)->first();
+        $this->formFields = [
+            'faqs' => [
+                'image' => null,
+                'az_title' => null,
+                'ru_title' => null,
+                'en_title' => null,
+                'az_description' => null,
+                'ru_description' => null,
+                'en_description' => null,
+            ],
+            'termofuse'=>[
+                'az_description' => $this->termofuse->az_description,
+                'ru_description' => $this->termofuse->ru_description,
+                'en_description' => $this->termofuse->en_description,
+            ],
+        ];
     }
 
     public function faqsAdd()
@@ -37,7 +59,7 @@ class Faqsandtermofuse extends Component
         try {
             $lastItem = Faq::orderBy('order', 'DESC')->first();
             $lastOrder = 0;
-            if ($lastItem->count() > 0) {
+            if ($lastItem) {
                 $lastOrder = $lastItem->order;
             }
             Faq::create([
@@ -53,15 +75,42 @@ class Faqsandtermofuse extends Component
             if (array_key_exists('image', $this->formFields['faqs'])) {
                 $uniqueName = uniqid();
                 $this->formFields['faqs']['image']->storeAs('about/faqs/', $uniqueName . '.png', 'uploads');
-                Faq::where('id', $lastItem->id + 1)->update([
-                    'image' => $uniqueName . '.png',
-                ]);
+                if($lastItem){
+                    Faq::where('id', $lastItem->id + 1)->update([
+                        'image' => $uniqueName . '.png',
+                    ]);
+                }else{
+                    Faq::where('id', 1)->update([
+                        'image' => $uniqueName . '.png',
+                    ]);
+                }
             }
             session()->flash('message', 'Məlumatlar əlavə edildi!');
         } catch (\Exception $e) {
             session()->flash('message', 'Məlumatlar əlavə edilmədi!' . $e->getMessage());
         }
         $this->mount();
+    }
+
+    public function termofuseupdate(){
+        try{
+            if($this->termofuse->count()>0){
+                TermofUse::where('id',1)->update([
+                    'az_description' => $this->formFields['termofuse']['az_description'],
+                    'ru_description' => $this->formFields['termofuse']['ru_description'],
+                    'en_description' => $this->formFields['termofuse']['en_description'],
+                ]);
+            }else{
+                TermofUse::create([
+                    'az_description' => $this->formFields['termofuse']['az_description'],
+                    'ru_description' => $this->formFields['termofuse']['ru_description'],
+                    'en_description' => $this->formFields['termofuse']['en_description'],
+                ]);
+            }
+            session()->flash('message', 'Məlumatlar yeniləndi!');
+        } catch (\Exception $e) {
+            session()->flash('message', 'Məlumatlar yenilənmədi!' . $e->getMessage());
+        }
     }
 
     public function deleteContent($id, $type = null)
@@ -71,42 +120,16 @@ class Faqsandtermofuse extends Component
                 case "faqs":
                     $data = Faq::where('id', $id)->first();
                     if ($data->image) {
-                        Storage::disk('gcs')->delete('/about/faqs/' . $data->image);
+                        Storage::disk('uploads')->delete('/about/faqs/' . $data->image);
                     }
                     Faq::where('id', $id)->delete();
-                    break;
-                case "termofuse":
-                    $data = Faq::where('id', $id)->first();
-                    if ($data->icon) {
-                        Storage::disk('gcs')->delete('/about/teams/' . $data->icon);
-                    }
-                    Faq::where('id', $id)->delete();
-                    break;
+                break;
             }
             session()->flash('message', 'Məlumatlar Silindi!');
         } catch (\Exception $e) {
             session()->flash('message', 'Məlumatlar Silinmədi!');
         }
         $this->mount();
-    }
-
-    public function getUser(Auth $auth){
-        $signInResult=(new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->signInWithEmailAndPassword('getdata@pw.az', 'getdata_123');
-        $idToken=$signInResult->idToken(); // string|null
-        $firebaseUserId=$signInResult->firebaseUserId(); // string|null
-        $accessToken=$signInResult->accessToken(); // string|null
-        $refreshToken=$signInResult->refreshToken(); // string|null
-        $data=$signInResult->data(); // array
-        $asTokenResponse=$signInResult->asTokenResponse(); // array
-        $facAuth=(new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth();
-        $signInResult2=$facAuth->signInWithRefreshToken($refreshToken);
-        $idToken=$signInResult2->idToken(); // string|null
-        $firebaseUserId=$signInResult2->firebaseUserId(); // string|null
-        $accessToken=$signInResult2->accessToken(); // string|null
-        $refreshToken=$signInResult2->refreshToken(); // string|null
-        $data=$signInResult2->data(); // array
-        $asTokenResponse=$signInResult2->asTokenResponse(); // array
-        dd($data);
     }
 
     public function render()

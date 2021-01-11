@@ -203,7 +203,7 @@
                         <div class="col-lg-4 col-md-4">
                             <div class="card">
                                 <div class="card-body w-100 d-flex">
-                                    <div class="w-50 d-inline-block">
+                                    <div class="w-100 d-inline-block">
                                         <h4 class="card-title">Müştəri </h4>
                                         <p class="card-title-desc">Aşağda qeyd olunmuş sahədən Müştərini seçin və
                                             ya

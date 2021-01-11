@@ -4,6 +4,9 @@ Route::group(['middleware' => 'auth:admins'], function () {
     Route::livewire('/', 'dashboard')->name('dashboard')->middleware(\App\Http\Middleware\Roles\BucketViewerController::class);
     Route::livewire('/profile/{id}', 'profile')->name('profile');
     Route::get('/logout', 'BaseController@logout')->name('logOut');
+    Route::get('/mail',function(){
+        return view('common.Functions.emailtemplate');
+    });
     Route::group(['prefix' => 'pwusers', 'middleware' => \App\Http\Middleware\Roles\TopAdminController::class], function () {
         Route::livewire('/', 'pwusers')->name('pwusers')->middleware(\App\Http\Middleware\Roles\DeletedController::class);
         Route::livewire('/{id}', 'pwuserinfo')->name('pwuserinfo');
@@ -37,6 +40,9 @@ Route::group(['middleware' => 'auth:admins'], function () {
         Route::livewire('/add', 'posts-edit-add')->name('postsAdd');
         Route::livewire('/edit/{id}', 'posts-edit-add')->name('postsEdit');
         Route::livewire('/browse/{id}', 'posts-browse')->name('postsBrowse');
+    });
+    Route::group(['prefix' => 'comments'], function () {
+        Route::livewire('/','comments')->name('comments');
     });
     Route::group(['prefix' => 'locale'], function () {
         Route::get('/{locale}', 'BaseController@changeLocale')->name('locale')->middleware('App\Http\Middleware\Localization');

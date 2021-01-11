@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 use Kreait\Firebase\Factory;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\EmailLists;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewCampaignNotify;
 
 class PostsEditAdd extends Component
 {
@@ -104,6 +107,13 @@ class PostsEditAdd extends Component
             'endTime' => strtotime($this->formFields['endTime']),
             'price' => $this->formFields['price'],
         ]);
+
+        $subscribers = EmailLists::all(); //Retrieving all subscribers
+        $post=\App\Models\Posts::latest()->first();
+        foreach($subscribers as $subscriber){
+            Notification::route('mail' , $subscriber->email) //Sending mail to subscriber
+                          ->notify(new NewCampaignNotify($post)); //With new post
+      }
         $this->formFields = [
             'images' => null,
             'category' => null,

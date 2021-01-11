@@ -82,7 +82,7 @@ class About extends Component
         $this->teams = Teams::all();
         $this->formFields = [
             'about' => [
-                'images' => $this->about[0]->images,
+                'images' => null,
                 'az_title' => $this->about[0]->az_title,
                 'ru_title' => $this->about[0]->ru_title,
                 'en_title' => $this->about[0]->en_title,

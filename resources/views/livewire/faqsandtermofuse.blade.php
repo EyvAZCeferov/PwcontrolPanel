@@ -79,6 +79,30 @@
                                         class="form-control"
                                     />
                                 </div>
+                                <div class="card col-lg-4 col-md-6 col-sm-12">
+                                    <label>Açıqlama</label>
+                                    <textarea
+                                        wire:model.lazy="formFields.faqs.az_description"
+                                        rows="4"
+                                        class="form-control"
+                                    ></textarea>
+                                </div>
+                                <div class="card col-lg-4 col-md-6 col-sm-12">
+                                    <label>Description</label>
+                                    <textarea
+                                        wire:model.lazy="formFields.faqs.en_description"
+                                        rows="4"
+                                        class="form-control"
+                                    ></textarea>
+                                </div>
+                                <div class="card col-lg-4 col-md-6 col-sm-12">
+                                    <label>Раскрытие</label>
+                                    <textarea
+                                        wire:model.lazy="formFields.faqs.ru_description"
+                                        rows="4"
+                                        class="form-control"
+                                    ></textarea>
+                                </div>
                                 <div class="col-lg-12 col-md-12 center align-center justify-center">
                                     <button class="btn btn-primary mx-auto" type="submit">
                                         @lang('static.actions.add')
@@ -145,7 +169,7 @@
                                                         <th>@lang('static.formFields.labels.name')</th>
                                                         <th>@lang('static.formFields.labels.description')</th>
                                                         <th>@lang('static.formFields.labels.order')</th>
-                                                        @if(auth()->user()->role==3)
+                                                        @if(auth()->guard('admins')->user()->role==3)
                                                             <th>@lang('static.actions.buttons')</th>
                                                         @endif
                                                     </tr>
@@ -171,7 +195,7 @@
                                                             <td>
                                                                 {{$item->order}}
                                                             </td>
-                                                            @if(auth()->user()->role==3)
+                                                            @if(auth()->guard('admins')->user()->role==3)
                                                                 <td>
                                                                     <div
                                                                         class="btn-group center justify-center text-center align-center">
@@ -203,7 +227,39 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane p-3" id="profile-1" role="tabpanel">
-                                    Contentkeldakldmsalkdamsl
+                                    <div class="row">
+                                        <form wire:submit.prevent="termofuseupdate" class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <label>Açıqlama</label>
+                                                <textarea
+                                                    wire:model.lazy="formFields.termofuseupdate.az_description"
+                                                    rows="4"
+                                                    class="form-control w-100"
+                                                >{{ $termofuse->az_description }}</textarea>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <label>Description</label>
+                                                <textarea
+                                                    wire:model.lazy="formFields.termofuseupdate.en_description"
+                                                    rows="4"
+                                                    class="form-control"
+                                                >{{ $termofuse->en_description }}</textarea>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <label>Раскрытие</label>
+                                                <textarea
+                                                    wire:model.lazy="formFields.termofuseupdate.ru_description"
+                                                    rows="4"
+                                                    class="form-control"
+                                                >{{ $termofuse->ru_description }}</textarea>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 center align-center justify-center">
+                                                <button class="btn btn-primary mx-auto" type="submit">
+                                                    @lang('static.formFields.buttons.update')
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -188,7 +188,7 @@
                             </thead>
 
                             <tbody>
-                            @foreach ($userData->get_cards()->where('type','bonuscard')->get() as $card)
+                            @foreach ($userData->get_cards()->where('type','bonuscard')->orWhere('type','pin')->get() as $card)
                                 <tr>
                                     @php($cardInfos=json_decode($card->cardInfos))
                                     <td>
@@ -207,13 +207,23 @@
                                         {{$cardInfos->type}}
                                     </td>
                                     <td>
-                                        <div class="btn-group center justify-center text-center align-center">
-                                            <button class="btn btn-lg btn-danger"
-                                                    wire:click="delete('{{$card->cardId}}','cards')"
-                                            >
-                                                <i class="mdi mdi-trash-can-outline"></i>
-                                            </button>
-                                        </div>
+                                        @if($card->type=='pin')
+                                            <div class="btn-group center justify-center text-center align-center">
+                                                <a class="btn btn-lg btn-info"
+                                                        href="{{ route('pwuser.pinInfo',$userData->uid) }}"
+                                                >
+                                                    <i class="mdi mdi-eye"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="btn-group center justify-center text-center align-center">
+                                                <button class="btn btn-lg btn-danger"
+                                                        wire:click="delete('{{$card->cardId}}','cards')"
+                                                >
+                                                    <i class="mdi mdi-trash-can-outline"></i>
+                                                </button>
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
