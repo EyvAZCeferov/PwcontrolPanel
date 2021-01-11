@@ -29,7 +29,7 @@ class Comments extends Model
         return $this->hasOne(Customers::class,'id','post_id');
     }
 
-    public function get_campaign(){
+    public function getCampaign(){
         return $this->hasOne(Posts::class,'id','post_id');
     }
 }

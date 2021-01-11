@@ -110,6 +110,8 @@
                                     <th>@lang('static.formFields.labels.post.viewCount')</th>
                                     <th>@lang('static.formFields.labels.post.startendtime')</th>
                                     <th>@lang('static.pages.dashboard.latesttransactions.price')</th>
+                                    <th>@lang('static.formFields.labels.commentcount')</th>
+                                    <th>@lang('static.formFields.labels.rating')</th>
                                     <th>@lang('static.actions.buttons')</th>
                                 </tr>
 
@@ -160,6 +162,37 @@
                                         </td>
                                         <td>
                                             {{$campaign->price}}
+                                        </td>
+                                        <td>
+                                            @if($campaign->get_comments !=null)
+                                                {{ $campaign->get_comments->count() }}
+                                            @else
+                                                <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($campaign->get_rating !=null)
+                                                @php
+                                                    $ratings=$campaign->get_rating;
+                                                    $ratingResult=0;
+                                                    $ratingSum=0;
+                                                @endphp
+                                                    @foreach ($campaign->get_rating as $rating ) 
+                                                        @php($ratingSum+=$rating->rating)
+                                                    @endforeach
+                                                    @if ($ratingResult>0) 
+                                                        @php($ratingResult=$ratingSum/$ratings->count())
+                                                    @endif                                                    
+                                                @for($i = 0; $i < 5; $i++)
+                                                    @if($i<=$ratingResult)
+                                                        <i class="mdi mdi-account-star-outline fa-2x"></i>
+                                                    @else
+                                                        <i class="dripicons-star fa-1x"></i>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
+                                            @endif
                                         </td>
                                         <td>
                                             @if($deleted)

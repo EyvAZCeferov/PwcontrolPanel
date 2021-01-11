@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Customers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Comments;
+use App\Models\Ratings;
 
 class Posts extends Model
 {
@@ -34,6 +36,14 @@ class Posts extends Model
     public function getCustomer()
     {
         return $this->hasOne(Customers::class, 'id', 'customer_id');
+    }
+
+    public function get_comments(){
+        return $this->hasOne(Comments::class,'post_id','id');
+    }
+
+    public function get_rating(){
+        return $this->hasMany(Ratings::class,'ratingable_id','id');
     }
 
 }

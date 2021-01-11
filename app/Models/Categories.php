@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Locations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Comments;
+use App\Models\Ratings;
 
 class Categories extends Model
 {
@@ -29,6 +31,14 @@ class Categories extends Model
     public function topCategory()
     {
         return $this->hasOne('\App\Models\Categories', 'id', 'top_category');
+    }
+
+    public function get_comments(){
+        return $this->hasOne(Comments::where('table','customers'),'post_id','id');
+    }
+
+    public function get_rating(){
+        return $this->hasMany(Ratings::where('tablename','customers'),'ratingable_id','id');
     }
 
 }

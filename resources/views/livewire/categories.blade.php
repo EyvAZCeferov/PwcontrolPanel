@@ -106,6 +106,8 @@
                                     <th>@lang('static.formFields.labels.name')</th>
                                     <th>@lang('static.formFields.labels.topcategory')</th>
                                     <th>@lang('static.formFields.labels.campaignscount')</th>
+                                    <th>@lang('static.formFields.labels.commentcount')</th>
+                                    <th>@lang('static.formFields.labels.rating')</th>
                                     <th>@lang('static.actions.buttons')</th>
                                 </tr>
 
@@ -147,6 +149,36 @@
                                                 {{$category->getPost->count()}}
                                             @else
                                                 0
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($category->get_comments)
+                                                {{ $category->get_comments->count() }}
+                                            @else
+                                                <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($category->get_rating)
+                                                @php($ratings=$category->get_rating)
+                                                @php
+                                                    $ratingResult=0;
+                                                    foreach ($ratings as $rating ) {
+                                                        $ratingResult+=$rating->rating;
+                                                    }
+                                                    if ($ratingResult>0) {
+                                                        $ratingResult=$ratingResult/$ratings->count();
+                                                    }
+                                                @endphp
+                                                @for($i = 0; $i < 5; $i++)
+                                                    @if($i<=$ratingResult)
+                                                        <i class="fa fa-star"></i>
+                                                    @else
+                                                        <i class="fa fa-user"></i>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
                                             @endif
                                         </td>
                                         <td>

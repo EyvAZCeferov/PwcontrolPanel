@@ -322,7 +322,9 @@ return [
                 'startendtime' => 'Başlanğıc - Son tarix',
             ],
             'order' => 'Sıra №',
-            'social'=>'Sosial Şəbəkələr'
+            'social'=>'Sosial Şəbəkələr',
+            'commentcount'=>'Koment sayı',
+            'rating'=>'Reytinq',
         ],
         'inputs' => [
             'email' => 'Elektron Poçtu daxil et.',

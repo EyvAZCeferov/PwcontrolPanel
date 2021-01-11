@@ -12,9 +12,9 @@ class Customers extends Component
     public function mount()
     {
         if ($this->deleted) {
-            $this->customers = \App\Models\Customers::onlyTrashed()->orderBy('created_at', 'DESC')->get();
+            $this->customers = \App\Models\Customers::onlyTrashed()->orderBy('created_at', 'DESC')->with(['get_locations','get_posts','get_comments','get_rating'])->get();
         } else {
-            $this->customers = \App\Models\Customers::orderBy('created_at', 'DESC')->get();
+            $this->customers = \App\Models\Customers::orderBy('created_at', 'DESC')->with(['get_locations','get_posts','get_comments','get_rating'])->get();
         }
     }
 

@@ -22,9 +22,9 @@ class Posts extends Component
         Carbon::setlocale('az');
         (new Factory)->withServiceAccount(app_path() . '/Firebase/FirebaseConfig.json')->createAuth()->signInWithEmailAndPassword('getdata@pw.az', 'getdata_123');
         if ($this->deleted) {
-            $this->posts = \App\Models\Posts::onlyTrashed()->orderBy('created_at', 'DESC')->get();
+            $this->posts = \App\Models\Posts::onlyTrashed()->orderBy('created_at', 'DESC')->with(['getCustomer','get_comments','get_rating'])->get();
         } else {
-            $this->posts = \App\Models\Posts::orderBy('created_at', 'DESC')->get();
+            $this->posts = \App\Models\Posts::orderBy('created_at', 'DESC')->with(['getCustomer','get_comments','get_rating'])->get();
         }
     }
 

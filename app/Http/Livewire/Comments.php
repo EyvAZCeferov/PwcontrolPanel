@@ -12,11 +12,11 @@ class Comments extends Component
 
     public function mount(){
         if (!$this->deleted) {
-            $this->customers=Comment::where('table','customers')->with(['get_customer','get_campaign'])->get();
-            $this->campaigns=Comment::where('table','posts')->with(['get_campaign','get_customer'])->get();
+            $this->customers=Comment::where('table','customers')->with(['get_customer','getCampaign'])->get();
+            $this->campaigns=Comment::where('table','posts')->with(['getCampaign','get_customer'])->get();
         }else{
-            $this->customers=Comment::onlyTrashed()->where('table','customers')->with(['get_customer','get_campaign'])->get();
-            $this->campaigns=Comment::onlyTrashed()->where('table','posts')->with(['get_customer','get_campaign'])->get();
+            $this->customers=Comment::onlyTrashed()->where('table','customers')->with(['get_customer','getCampaign'])->get();
+            $this->campaigns=Comment::onlyTrashed()->where('table','posts')->with(['get_customer','getCampaign'])->get();
         }
     }
 

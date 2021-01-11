@@ -175,11 +175,21 @@
                                                         {{ $message->description }}
                                                      </td>
                                                      <td>
-                                                         @if($campaign->get_campaign())
-                                                            {{ print_r($campaign->get_campaign()) }}
-                                                            @else
-                                                                <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
-                                                            @endif
+                                                        @if($campaign->getCampaign)
+                                                            <a
+                                                            href="{{ settings('site_address') }}/customers/{{ $campaign->getCampaign->id }}/campaigns/{{ $campaign->slug }}"
+                                                            >
+                                                                @if(app()->getLocale()=='az')
+                                                                    {{$campaign->getCampaign->az_name}}
+                                                                @elseif(app()->getLocale()=='en')
+                                                                    {{$campaign->getCampaign->en_name}}
+                                                                @elseif(app()->getLocale()=='ru')
+                                                                    {{$campaign->getCampaign->ru_name}}
+                                                                @endif
+                                                        </a>
+                                                        @else
+                                                            <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
+                                                        @endif
                                                         </a>
                                                      </td>
                                                      @if(auth()->guard('admins')->user()->role==3)
