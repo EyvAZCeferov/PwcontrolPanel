@@ -16,18 +16,41 @@ use App\Admins;
 |
 */
 
-Route::group(['prefix' => 'media'], function () {
-    Route::get('customers', 'Api\ApiController@customers');
-    Route::get('customers/{id}', 'Api\ApiController@customer');
-    Route::get('categories', 'Api\ApiController@categories');
-    Route::get('categories/{id}', 'Api\ApiController@category');
-    Route::get('posts', 'Api\ApiController@posts');
-    Route::get('posts/{id}', 'Api\ApiController@post');
-    Route::get('posts/{id}/read/{bool}', 'Api\ApiController@postread')->middleware(\App\Http\Middleware\ApiUserController::class);
-    Route::get('locations', 'Api\ApiController@locations');
-    Route::get('locations/{id}', 'Api\ApiController@location');
+Route::group(['prefix'=>'useraction'],function(){
+    Route::post('login', 'Api\LoginRegisterController@login');
+    Route::post('register','Api\LoginRegisterController@register');
+    Route::middleware('auth:api')->group(function () {
+
+        Route::group(['prefix'=>'user'],function(){
+            Route::resource('userdata', 'Api\User\UserDataController');
+            Route::get('get_cards', 'Api\User\UserDataController@get_cards');
+            Route::get('pininfo', 'Api\User\UserDataController@pininfo');
+            Route::resource('payings', 'Api\User\PayingDataController');
+            Route::resource('paying-products', 'Api\User\PayingProductDataController');
+        });
+
+        Route::group(['prefix' => 'pwabout'], function () {
+            Route::get('termofuse','Api\PwAbout\PWAboutController@termofuse');
+            Route::get('settings','Api\PwAbout\PWAboutController@settings');
+            Route::get('about','Api\PwAbout\PWAboutController@about');
+            Route::get('faqs','Api\PwAbout\PWAboutController@faqs');
+            Route::get('teams','Api\PwAbout\PWAboutController@teams');
+            Route::get('whychooseus','Api\PwAbout\PWAboutController@whychooseus');
+        });
+
+        Route::group(['prefix' => 'customers'], function () {
+            Route::resource('customers','Api\Customers\CustomersController');
+            Route::resource('campaigns','Api\Customers\CampaignsController');
+            Route::resource('locations','Api\Customers\LocationsController');
+            Route::resource('comments','Api\Customers\CommentsController');
+            Route::resource('ratings','Api\Customers\RatingsController');
+        });
+
+        Route::post('contactus','Api\Action\ActionController@contactus');
+    });
 });
-Route::get('register', function () {
+
+Route::get('adminregister', function () {
     try {
         $user = Admins::create([
             'profilePhoto' => Str::random(11).'png',

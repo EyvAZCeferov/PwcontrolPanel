@@ -8,11 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\UserCards;
 use App\Models\UsersPaying;
+use Laravel\Passport\HasApiTokens;
+
 
 
 class User extends Authenticatable
 {
-    use Notifiable, Softdeletes;
+    use HasApiTokens,Notifiable, Softdeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +25,8 @@ class User extends Authenticatable
         'phoneNumber',
         'profilePhoto',
         'name',
-        'email',
-        'password',
+        'uid',
+        'password'
     ];
 
     /**
@@ -33,7 +35,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     /**
@@ -42,7 +44,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'phoneNumber_verified_at'=>'datetime',
     ];
 
@@ -53,11 +54,15 @@ class User extends Authenticatable
     ];
 
     public function get_cards(){
-        return $this->hasOne(UserCards::class,'uid','uid');
+        return $this->hasMany(UserCards::class,'uid','uid');
     }
 
     public function get_payings(){
         return $this->hasOne(UsersPaying::class,'uid','uid');
+    }
+
+    public function pininfo(){
+        return $this->hasOne(UserCards::class,'uid','uid');
     }
 
 
