@@ -410,10 +410,10 @@
                             <div class="tab-content">
                                 <div class="tab-pane active p-3" id="home-1" role="tabpanel">
 
-                                    @if ($this->about[0]->images !=null)
+                                    @if ($this->about->images !=null)
                                         <div class="w-100"
                                              style="scroll-behavior: auto; overflow-scrolling: touch; overflow-y: hidden; overflow-x: scroll;">
-                                            @foreach(json_decode($this->about[0]->images) as $image)
+                                            @foreach(json_decode($this->about->images) as $image)
                                                 <div class="d-inline-block w-25 position-relative">
                                                     <img
                                                         src="{{asset('/storage/uploads/about/aboutImages/'.$image)}}"
@@ -463,7 +463,7 @@
                                                             <label>Başlıq</label>
                                                             <input
                                                                 wire:model="formFields.about.az_title"
-                                                                value="{{ $about[0]->az_title }}"
+                                                                value="{{ $about->az_title }}"
                                                                 type="text"
                                                                 class="form-control"
                                                             />
@@ -482,7 +482,7 @@
                                                             <input
                                                                 wire:model="formFields.about.ru_title"
                                                                 type="text"
-                                                                value="{{ $about[0]->ru_title }}"
+                                                                value="{{ $about->ru_title }}"
                                                                 class="form-control"
                                                             />
                                                         </div>
@@ -500,7 +500,7 @@
                                                             <input
                                                                 wire:model="formFields.about.en_title"
                                                                 type="text"
-                                                                value="{{ $about[0]->en_title }}"
+                                                                value="{{ $about->en_title }}"
                                                                 class="form-control"
                                                             />
                                                         </div>
@@ -518,7 +518,7 @@
                                                             <input
                                                                 wire:model="formFields.about.az_motive"
                                                                 type="text"
-                                                                value="{{ $about[0]->az_motive }}"
+                                                                value="{{ $about->az_motive }}"
                                                                 class="form-control"
                                                             />
                                                         </div>
@@ -536,7 +536,7 @@
                                                             <input
                                                                 wire:model="formFields.about.en_motive"
                                                                 type="text"
-                                                                value="{{ $about[0]->en_motive }}"
+                                                                value="{{ $about->en_motive }}"
                                                                 class="form-control"
                                                             />
                                                         </div>
@@ -554,7 +554,7 @@
                                                             <input
                                                                 wire:model="formFields.about.ru_motive"
                                                                 type="text"
-                                                                value="{{ $about[0]->ru_motive }}"
+                                                                value="{{ $about->ru_motive }}"
                                                                 class="form-control"
                                                             />
                                                         </div>
@@ -574,7 +574,7 @@
                                                                 rows="3"
                                                                 class="form-control"
                                                             >
-                                                            {{ $about[0]->az_description }}
+                                                            {{ $about->az_description }}
                                                             </textarea>
                                                         </div>
                                                         @error('formFields.az_description') <span
@@ -593,7 +593,7 @@
                                                                 rows="3"
                                                                 class="form-control"
                                                             >
-                                                                {{ $about[0]->ru_description }}
+                                                                {{ $about->ru_description }}
                                                             </textarea>
                                                         </div>
                                                         @error('formFields.ru_description') <span
@@ -612,7 +612,7 @@
                                                                 rows="3"
                                                                 class="form-control"
                                                             >
-                                                                {{ $about[0]->en_description }}
+                                                                {{ $about->en_description }}
                                                             </textarea>
                                                         </div>
                                                         @error('formFields.en_description') <span

@@ -215,7 +215,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Products">
+                                    <a href="{{route("products")}}">
                                     Products
                                     </a>
                                 </li>

@@ -144,7 +144,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($customer->get_comments !=null)
+                                            @if($customer->get_comments !=null || $customer->get_comments !==null || $customer->get_comments)
                                                 {{ $customer->get_comments->count() }}
                                             @else
                                                 <span class="text-danger">@lang('static.formFields.actions.nullData')</span>
@@ -157,12 +157,12 @@
                                                     $ratingResult=0;
                                                     $ratingSum=0;
                                                 @endphp
-                                                    @foreach ($customer->get_rating as $rating ) 
+                                                    @foreach ($customer->get_rating as $rating )
                                                         @php($ratingSum+=$rating->rating)
                                                     @endforeach
-                                                    @if ($ratingResult>0) 
+                                                    @if ($ratingResult>0)
                                                         @php($ratingResult=$ratingSum/$ratings->count())
-                                                    @endif                                                    
+                                                    @endif
                                                 @for($i = 0; $i < 5; $i++)
                                                     @if($i<=$ratingResult)
                                                         <i class="mdi mdi-account-star-outline fa-2x"></i>

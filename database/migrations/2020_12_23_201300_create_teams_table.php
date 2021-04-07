@@ -23,7 +23,7 @@ class CreateTeamsTable extends Migration
             $table->mediumText('az_description');
             $table->mediumText('ru_description');
             $table->mediumText('en_description');
-            $table->integer('order')->default(1)->autoIncrement();
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }

@@ -77,21 +77,21 @@ class About extends Component
 
     public function mount()
     {
-        $this->about = AboutPage::where('id', 1)->get();
+        $this->about = AboutPage::where('id', 1)->first();
         $this->whychooseus = WhyChooseUs::where('id', 1)->with('getItems')->get();
         $this->teams = Teams::all();
         $this->formFields = [
             'about' => [
                 'images' => null,
-                'az_title' => $this->about[0]->az_title,
-                'ru_title' => $this->about[0]->ru_title,
-                'en_title' => $this->about[0]->en_title,
-                'az_motive' => $this->about[0]->az_motive,
-                'ru_motive' => $this->about[0]->ru_motive,
-                'en_motive' => $this->about[0]->en_motive,
-                'az_description' => $this->about[0]->az_description,
-                'ru_description' => $this->about[0]->ru_description,
-                'en_description' => $this->about[0]->en_description,
+                'az_title' => $this->about->az_title,
+                'ru_title' => $this->about->ru_title,
+                'en_title' => $this->about->en_title,
+                'az_motive' => $this->about->az_motive,
+                'ru_motive' => $this->about->ru_motive,
+                'en_motive' => $this->about->en_motive,
+                'az_description' => $this->about->az_description,
+                'ru_description' => $this->about->ru_description,
+                'en_description' => $this->about->en_description,
             ],
             'whychooseus' => [
                 'table' => [
